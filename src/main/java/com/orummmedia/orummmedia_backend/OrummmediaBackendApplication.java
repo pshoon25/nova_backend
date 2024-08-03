@@ -18,12 +18,11 @@ public class OrummmediaBackendApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**") // localhost:3030 뒤에 붙는 값을 상관없이 받겠다.
+				registry.addMapping("/**")
 						.allowedHeaders("*")
 						.allowedMethods("*")
 						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr");
 			}
 		};
 	}
-
 }
