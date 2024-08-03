@@ -21,7 +21,7 @@ public class OrummmediaBackendApplication {
 				registry.addMapping("/**") // localhost:3030 뒤에 붙는 값을 상관없이 받겠다.
 						.allowedHeaders("*")
 						.allowedMethods("*")
-						.allowedOrigins("http://localhost:3000");
+						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr");
 			}
 		};
 	}
