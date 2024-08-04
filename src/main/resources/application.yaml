@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/NOVA_TEST
+    url: jdbc:mysql://localhost:3306/NOVA_TEST?serverTimezone=UTC
     username: su
     password: tjdgns123..
     driver-class-name: com.mysql.cj.jdbc.Driver
