@@ -14,15 +14,14 @@ public class OrummmediaBackendApplication {
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
+	public WebMvcConfigurer corsConfigure(){
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedHeaders("Access-Control-Allow-Origin") // 모든 헤더를 허용
-						.allowCredentials(true);
+				registry.addMapping("/**") // localhost:3030 뒤에 붙는 값을 상관없이 받겠다.
+						.allowedHeaders("*")
+						.allowedMethods("*")
+						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr");
 			}
 		};
 	}
