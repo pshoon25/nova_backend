@@ -14,14 +14,15 @@ public class OrummmediaBackendApplication {
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigure(){
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
 						.allowedHeaders("*")
 						.allowedMethods("*")
-						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr");
+						.allowCredentials(true);
 			}
 		};
 	}
