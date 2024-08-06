@@ -2,9 +2,6 @@ package com.orummmedia.orummmedia_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class OrummmediaBackendApplication {
@@ -13,17 +10,4 @@ public class OrummmediaBackendApplication {
 		SpringApplication.run(OrummmediaBackendApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedHeaders("Gmt-Time, access-control-allow-methods, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization_A, Authorization_R, cache-control, Access-Control-Allow-Origin, Access-Token")
-						.allowCredentials(true);
-			}
-		};
-	}
 }
