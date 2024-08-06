@@ -19,7 +19,7 @@ public class OrummmediaBackendApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
+						.allowedOrigins("http://www.rs-nova.co.kr")
 						.allowedHeaders("*")
 						.allowedMethods("*")
 						.allowCredentials(true);
