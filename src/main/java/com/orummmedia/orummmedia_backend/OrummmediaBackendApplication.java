@@ -22,7 +22,7 @@ public class OrummmediaBackendApplication {
 						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
-						.allowCredentials(true); // credentials 지원 여부에 따라 설정
+						.allowCredentials(true);
 			}
 		};
 	}
