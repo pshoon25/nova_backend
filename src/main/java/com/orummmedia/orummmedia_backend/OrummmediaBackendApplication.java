@@ -21,7 +21,7 @@ public class OrummmediaBackendApplication {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedHeaders("Content-Type", "Authorization") // 필요한 헤더만 허용
+						.allowedHeaders("Content-Type", "Authorization", "Access-Control-Allow-Origin")
 						.allowCredentials(true);
 			}
 		};
