@@ -1,5 +1,3 @@
-package com.orummmedia.orummmedia_backend;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,14 +12,15 @@ public class OrummmediaBackendApplication {
 	}
 
 	@Bean
-	public WebMvcConfigurer corsConfigure(){
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("*")
-						.allowedMethods("*")
-						.allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr");
+						.allowCredentials(true); // credentials 지원 여부에 따라 설정
 			}
 		};
 	}
