@@ -1,10 +1,10 @@
 FROM openjdk:17-jdk-alpine
 
 # 작업 디렉토리 설정
-WORKDIR /homepage/orummedia/backend
+WORKDIR /homepage/orummmedia/orummmedia_backend
 
 # JAR 파일을 컨테이너로 복사
-COPY build/libs/orummmedia-backend-0.0.1-SNAPSHOT.jar /app/orummmedia-backend.jar
+COPY build/libs/orummmedia-backend-0.0.1-SNAPSHOT.jar /homepage/orummmedia/orummmedia_backend/orummmedia-backend.jar
 
 # Expose port 8080
 EXPOSE 8080
