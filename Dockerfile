@@ -4,7 +4,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # JAR 파일을 컨테이너로 복사
-COPY build/libs/orummmedia-backend-0.0.1-SNAPSHOT.jar /app/orummmedia-backend.jar
+COPY orummmedia-backend.jar /app/orummmedia-backend.jar
 
 # Expose port 8080
 EXPOSE 8080
