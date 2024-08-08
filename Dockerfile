@@ -1,7 +1,7 @@
 FROM openjdk:17-jdk-alpine
 
 # 작업 디렉토리 설정
-WORKDIR /app
+WORKDIR /homepage/orummedia/backend
 
 # JAR 파일을 컨테이너로 복사
 COPY build/libs/orummmedia-backend-0.0.1-SNAPSHOT.jar /app/orummmedia-backend.jar
