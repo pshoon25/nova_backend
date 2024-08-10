@@ -1,11 +1,13 @@
-# 선택한 기반 이미지
-FROM openjdk:11-jdk
+FROM bellsoft/liberica-openjdk-alpine:17
 
-# 애플리케이션 디렉토리 생성
-WORKDIR /app
+CMD ["./gradlew", "clean", "build"]
 
-# 애플리케이션 JAR 파일을 컨테이너로 복사
-COPY /homepage/orummmedia/orummmedia_backend/orummmedia_backend.jar app.jar
+VOLUME /tmp
 
-# 애플리케이션 실행
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ARG JAR_FILE=build/libs/*.jar
+
+COPY ${JAR_FILE} app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","/app.jar"]
