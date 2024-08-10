@@ -12,6 +12,6 @@ public class MissionController {
 
     @GetMapping("/test")
     public String getTest(){
-        return "연동 성공 123";
+        return "연동 성공";
     }
 }
