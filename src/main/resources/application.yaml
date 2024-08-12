@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/NOVA_LIVE?serverTimezone=UTC
+    url: jdbc:mysql://61.99.10.111:3306/NOVA_LIVE?serverTimezone=UTC
     username: su
     password: tjdgns123..
   jpa:
