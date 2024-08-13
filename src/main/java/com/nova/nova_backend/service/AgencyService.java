@@ -13,7 +13,9 @@ public class AgencyService {
     private final AgencyRepository agencyRepository;
 
     public List<Agency> getAgencyList() {
-        return agencyRepository.findAll();
+        List<Agency> agencyList = agencyRepository.findAll();
+        System.out.println(agencyList);
+        return agencyList;
     }
 
     public Agency insertAgency(Agency agency) {

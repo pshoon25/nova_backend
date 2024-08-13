@@ -16,6 +16,7 @@ public class AgencyController {
 
     @GetMapping("/getAgencyList")
     public List<Agency> getAgencyList() {
+        System.out.println("접속 성공1");
         return agencyService.getAgencyList();
     }
 
