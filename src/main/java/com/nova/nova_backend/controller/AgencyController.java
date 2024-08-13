@@ -1,7 +1,7 @@
-package com.orummmedia.orummmedia_backend.controller;
+package com.nova.nova_backend.controller;
 
-import com.orummmedia.orummmedia_backend.domain.entity.Agency;
-import com.orummmedia.orummmedia_backend.service.AgencyService;
+import com.nova.nova_backend.domain.entity.Agency;
+import com.nova.nova_backend.service.AgencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

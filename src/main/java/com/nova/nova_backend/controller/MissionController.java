@@ -1,4 +1,4 @@
-package com.orummmedia.orummmedia_backend.controller;
+package com.nova.nova_backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

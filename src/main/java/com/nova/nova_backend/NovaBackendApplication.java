@@ -1,13 +1,13 @@
-package com.orummmedia.orummmedia_backend;
+package com.nova.nova_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OrummmediaBackendApplication {
+public class NovaBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OrummmediaBackendApplication.class, args);
+		SpringApplication.run(NovaBackendApplication.class, args);
 	}
 
 }

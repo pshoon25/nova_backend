@@ -1,7 +1,7 @@
-package com.orummmedia.orummmedia_backend.service;
+package com.nova.nova_backend.service;
 
-import com.orummmedia.orummmedia_backend.domain.entity.Agency;
-import com.orummmedia.orummmedia_backend.repository.AgencyRepository;
+import com.nova.nova_backend.domain.entity.Agency;
+import com.nova.nova_backend.repository.AgencyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,3 +21,4 @@ public class AgencyService {
         return agencyRepository.save(agency);
     }
 }
+

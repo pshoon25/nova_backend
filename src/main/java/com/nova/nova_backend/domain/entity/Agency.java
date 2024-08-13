@@ -1,13 +1,14 @@
-package com.orummmedia.orummmedia_backend.domain.entity;
+package com.nova.nova_backend.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -18,7 +19,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Agency {
-
     @Id
     @Column(name = "AGENCY_CODE", length = 10, nullable = false)
     private String agencyCode; // 대행사 코드
@@ -59,3 +59,4 @@ public class Agency {
     @Column(name = "REGISTER_DATE_TIME")
     private LocalDate registerDateTime; // 등록일자
 }
+
