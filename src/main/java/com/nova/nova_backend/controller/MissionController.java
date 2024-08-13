@@ -12,6 +12,7 @@ public class MissionController {
 
     @GetMapping("/test")
     public String getTest(){
+        System.out.println("테스트 연동 성공");
         return "연동 성공";
     }
 }
