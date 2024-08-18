@@ -12,8 +12,9 @@ import java.util.List;
 public class AgencyService {
     private final AgencyRepository agencyRepository;
 
-    public List<Agency> getAgencyList() {
-        return agencyRepository.findAll();
+    public List<Agency> getAgencyList(String agencyName) {
+        return agencyRepository.findAllByAgencyName(agencyName);
+//        return agencyRepository.findAll();
     }
 
     public Agency insertAgency(Agency agency) {

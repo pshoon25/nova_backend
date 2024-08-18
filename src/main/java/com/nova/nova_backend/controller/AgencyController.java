@@ -15,8 +15,8 @@ public class AgencyController {
     private final AgencyService agencyService;
 
     @GetMapping("/getAgencyList")
-    public List<Agency> getAgencyList() {
-        return agencyService.getAgencyList();
+    public List<Agency> getAgencyList(@RequestParam("agencyName") String agencyName) {
+        return agencyService.getAgencyList(agencyName);
     }
 
     @PostMapping("/insertAgencyInfo")
