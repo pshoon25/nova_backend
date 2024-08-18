@@ -1,18 +1,23 @@
 package com.nova.nova_backend.controller;
 
+import com.nova.nova_backend.domain.dto.AgencyMissionDTO;
+import com.nova.nova_backend.service.MissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/mission")
 @RequiredArgsConstructor
 public class MissionController {
 
-    @GetMapping("/test")
-    public String getTest(){
-        System.out.println("테스트 연동 성공");
-        return "연동 성공";
+    private final MissionService missionService;
+    @GetMapping("/getAgencyMissionListByAgencyName")
+    public List<AgencyMissionDTO> getAgencyMissionListByAgencyName(@RequestParam("agencyName") String agencyName){
+        return missionService.getAgencyMissionListByAgencyName(agencyName);
     }
 }

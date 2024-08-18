@@ -13,14 +13,23 @@ public class AgencyService {
     private final AgencyRepository agencyRepository;
 
     public List<Agency> getAgencyList() {
-        List<Agency> agencyList = agencyRepository.findAll();
-        System.out.println(agencyList);
-        return agencyList;
+        return agencyRepository.findAll();
     }
 
     public Agency insertAgency(Agency agency) {
         agency.setAgencyCode("1234");
         return agencyRepository.save(agency);
+    }
+
+    public int updateAgencyInfo(List<Agency> agencyList) {
+        int updatedCount = 0;
+        for (Agency agency : agencyList) {
+            Agency updatedAgency = agencyRepository.save(agency);
+            if (updatedAgency != null) {
+                updatedCount++;
+            }
+        }
+        return updatedCount;
     }
 }
 

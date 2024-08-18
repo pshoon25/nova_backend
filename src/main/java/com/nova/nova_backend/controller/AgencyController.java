@@ -16,12 +16,16 @@ public class AgencyController {
 
     @GetMapping("/getAgencyList")
     public List<Agency> getAgencyList() {
-        System.out.println("접속 성공1");
         return agencyService.getAgencyList();
     }
 
     @PostMapping("/insertAgencyInfo")
     public Agency insertAgencyInfo(@RequestBody Agency agency){
         return agencyService.insertAgency(agency);
+    }
+
+    @PutMapping("/updateAgencyInfo")
+    public int updateAgencyInfo(@RequestBody List<Agency> agencyList) {
+        return agencyService.updateAgencyInfo(agencyList);
     }
 }
