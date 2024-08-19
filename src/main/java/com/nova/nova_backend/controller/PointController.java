@@ -21,8 +21,9 @@ public class PointController {
     private final PointService pointService;
 
     @GetMapping("/getPointHistoryList")
-    public List<PointHistoryDTO> getPointHistoryList(@RequestParam("agencyName") String agencyName) {
-        return pointService.getPointHistoryList(agencyName);
+    public List<PointHistoryDTO> getPointHistoryList(@RequestParam(value = "agencyName", required = false) String agencyName,
+                                                     @RequestParam(value = "status", required = false) String status) {
+        return pointService.getPointHistoryList(agencyName, status);
     }
 
     @GetMapping("/getAgencyPointByAgencyName")

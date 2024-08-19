@@ -8,6 +8,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AgencyRepository extends JpaRepository<Agency, Long> {
-    @Query("SELECT a FROM Agency a WHERE (:agencyName IS NULL OR a.agencyName = :agencyName)")
-    List<Agency> findAllByAgencyName(@Param("agencyName") String agencyName);
+    @Query("SELECT a FROM Agency a WHERE " +
+            "(:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) AND " +
+            "(:resaleYn IS NULL OR a.resaleYn = :resaleYn) AND " +
+            "(:useYn IS NULL OR a.useYn = :useYn)")
+    List<Agency> findAllByFilters(
+            @Param("agencyName") String agencyName,
+            @Param("resaleYn") String resaleYn,
+            @Param("useYn") String useYn
+    );
 }

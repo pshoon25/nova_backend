@@ -13,7 +13,9 @@ public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointH
             "FROM AgencyPointHistory p " +
             "LEFT JOIN p.agency a " +
             "LEFT JOIN p.mission m " +
-            "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%)")
-    List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName);
+            "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) AND " +
+            "(:status IS NULL OR p.status = :status)")
+    List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName,
+                                                  @Param("status") String status);
 
 }
