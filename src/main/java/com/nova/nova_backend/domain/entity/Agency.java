@@ -38,15 +38,6 @@ public class Agency {
     @Column(name = "PHONE_NUM", length = 20)
     private String phoneNum; // 연락처
 
-    @Column(name = "PLACE_TRAFFIC")
-    private BigDecimal placeTraffic; // 플레이스 트래픽
-
-    @Column(name = "PLACE_SAVE")
-    private BigDecimal placeSave; // 플레이스 저장
-
-    @Column(name = "PLACE_SAVE_PREMIUM")
-    private BigDecimal placeSavePremium; // 플레이스 저장 프리미엄
-
     @Column(name = "RESALE_YN", length = 1)
     private String resaleYn; // 재판매 여부
 
