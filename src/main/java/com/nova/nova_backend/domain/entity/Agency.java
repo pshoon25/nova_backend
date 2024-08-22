@@ -20,34 +20,34 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Agency {
     @Id
-    @Column(name = "AGENCY_CODE", length = 10, nullable = false)
-    private String agencyCode; // 대행사 코드
+    @Column(name = "AGENCY_CODE", length = 50, nullable = false)
+    private String agencyCode;
 
-    @Column(name = "LOGIN_ID", length = 20)
-    private String loginId; // 로그인 아이디
+    @Column(name = "LOGIN_ID", length = 50, nullable = false)
+    private String loginId;
 
-    @Column(name = "PASSWORD", length = 64)
-    private String password; // 패스워드
+    @Column(name = "PASSWORD", length = 64, nullable = false)
+    private String password;
 
-    @Column(name = "AGENCY_NAME", length = 20)
-    private String agencyName; // 대행사명
+    @Column(name = "AGENCY_NAME", length = 50, nullable = false)
+    private String agencyName;
 
-    @Column(name = "NAME", length = 10)
-    private String name; // 담당자
+    @Column(name = "NAME", length = 50)
+    private String name;
 
     @Column(name = "PHONE_NUM", length = 20)
-    private String phoneNum; // 연락처
+    private String phoneNum;
 
-    @Column(name = "RESALE_YN", length = 1)
-    private String resaleYn; // 재판매 여부
+    @Column(name = "RESALE_YN", length = 1, nullable = false)
+    private String resaleYn;
 
-    @Column(name = "USER_TYPE", length = 10)
-    private String userType; // 사용자 여부
+    @Column(name = "USER_TYPE", length = 10, nullable = false)
+    private String userType;
 
-    @Column(name = "USE_YN", length = 1)
-    private String useYn; // 사용 여부
+    @Column(name = "USE_YN", length = 1, nullable = false)
+    private String useYn;
 
     @Column(name = "REGISTER_DATE_TIME")
-    private LocalDate registerDateTime; // 등록일자
+    private LocalDate registerDateTime;
 }
 
