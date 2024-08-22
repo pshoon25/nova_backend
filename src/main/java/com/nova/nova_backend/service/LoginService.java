@@ -68,7 +68,7 @@ public class LoginService {
 
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("agencyCode"	 , agencyCode);
-            userInfo.put("agencyName"    , resultAgency.getName());
+            userInfo.put("agencyName"    , resultAgency.getAgencyName());
             userInfo.put("name"		     , resultAgency.getName());
             userInfo.put("userType"		 , resultAgency.getUserType());
             userInfo.put("accessToken"   , accessToken);
@@ -97,7 +97,7 @@ public class LoginService {
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("agencyCode"	 , agencyCode);
-        userInfo.put("agencyName"    , resultAgency.getName());
+        userInfo.put("agencyName"    , resultAgency.getAgencyName());
         userInfo.put("name"		     , resultAgency.getName());
         userInfo.put("userType"		 , resultAgency.getUserType());
         userInfo.put("accessToken"   , accessToken);
