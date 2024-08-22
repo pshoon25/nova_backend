@@ -67,9 +67,10 @@ public class LoginService {
             String accessToken  = jwtService.createAccessToken(agencyCode);
 
             Map<String, Object> userInfo = new HashMap<>();
-            userInfo.put("userMngCode"	 , agencyCode);
-            userInfo.put("name"		     , resultAgency.getName());
-            userInfo.put("userType"		 , resultAgency.getUserType());
+            userInfo.put("agencyCode"	 , agencyCode);
+            userInfo.put("agencyName"    , agency.getName());
+            userInfo.put("name"		     , agency.getName());
+            userInfo.put("userType"		 , agency.getUserType());
             userInfo.put("accessToken"   , accessToken);
 
             return userInfo;
@@ -95,7 +96,8 @@ public class LoginService {
         String accessToken  = jwtService.createAccessToken(agencyCode);
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
-        userInfo.put("userMngCode"	 , agencyCode);
+        userInfo.put("agencyCode"	 , agencyCode);
+        userInfo.put("agencyName"    , agency.getName());
         userInfo.put("name"		     , agency.getName());
         userInfo.put("userType"		 , agency.getUserType());
         userInfo.put("accessToken"   , accessToken);
