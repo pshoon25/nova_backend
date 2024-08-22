@@ -13,9 +13,9 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
             "age.agencyName, mis.missionNo, mis.missionType, mis.missionCategory, mis.placeMid, " +
             "mis.placeName, mis.placeAddress, mis.dailyWorkload, mis.totalWorkdays, mis.rankKeyword, " +
             "mis.searchKeyword, mis.totalRequest, mis.adRequestDate, mis.adStartDate, mis.adEndDate, " +
-            "mis.missionStatus) " +
+            "mis.missionStatus, mis.reward) " +
             "FROM AgencyMission mis " +
-            "LEFT JOIN Agency age ON mis.agency = age " +
+            "LEFT JOIN mis.agency age " +
             "WHERE (:agencyName IS NULL OR age.agencyName LIKE %:agencyName%)")
     List<AgencyMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName);
 }
