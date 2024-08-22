@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointHistory, Long> {
-    @Query("SELECT new com.nova.nova_backend.domain.dto.PointHistoryDTO(p.pointHistoryNo, a.agencyName, p.mission.missionNo, p.content, p.points, p.registerDateTime, p.status) " +
+    @Query("SELECT new com.nova.nova_backend.domain.dto.PointHistoryDTO(p.pointHistoryNo, a.agencyName, m.missionNo, p.content, p.points, p.registerDateTime, p.status) " +
             "FROM AgencyPointHistory p " +
             "LEFT JOIN p.agency a " +
             "LEFT JOIN p.mission m " +
@@ -17,5 +17,4 @@ public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointH
             "(:status IS NULL OR p.status = :status)")
     List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName,
                                                   @Param("status") String status);
-
 }
