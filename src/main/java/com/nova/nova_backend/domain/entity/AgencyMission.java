@@ -17,12 +17,15 @@ import java.util.Date;
 public class AgencyMission {
 
     @Id
-    @Column(name = "MISSION_NO", length = 10)
+    @Column(name = "MISSION_NO", length = 50, nullable = false)
     private String missionNo;
 
     @ManyToOne
     @JoinColumn(name = "AGENCY_CODE", nullable = false)
     private Agency agency;
+
+    @Column(name = "REWARD", length = 50)
+    private String reward;
 
     @Column(name = "MISSION_TYPE", length = 50)
     private String missionType;
