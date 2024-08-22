@@ -32,19 +32,20 @@ public class LoginService {
 
         Map<String, Object> result = new HashMap<>();
 
+        System.out.println("loginId : " + loginId);
+        System.out.println("password : " + password);
+
         // 로그인 아이디로 정보 조회
         Agency resultAgency =agencyRepository.findByLoginId(loginId);
+
+         System.out.println(resultAgency);
 
         if (resultAgency == null) {
             result.put("failed", "Id Failed");
             return result;
         } else {
-            if ("N".equals(String.valueOf(result.get("USE_YN")))) {
+            if ("N".equals(resultAgency.getUseYn())) {
                 result.put("failed", "Stop Using");
-                return result;
-            }
-            if ("Y".equals(String.valueOf(result.get("DEL_YN")))) {
-                result.put("failed", "Delete User");
                 return result;
             }
         }
@@ -65,7 +66,7 @@ public class LoginService {
             // 같을 경우 JWT 토큰 발급
             String accessToken  = jwtService.createAccessToken(agencyCode);
 
-            Map<String, Object> userInfo = new HashMap<String, Object>();
+            Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("userMngCode"	 , agencyCode);
             userInfo.put("name"		     , resultAgency.getName());
             userInfo.put("userType"		 , resultAgency.getUserType());
