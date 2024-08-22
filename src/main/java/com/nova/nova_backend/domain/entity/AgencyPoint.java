@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class AgencyPoint {
     @Id
-    @Column(name = "AGENCY_CODE", length = 10)
+    @Column(name = "AGENCY_CODE", length = 50)
     private String agencyCode;
 
     @OneToOne
