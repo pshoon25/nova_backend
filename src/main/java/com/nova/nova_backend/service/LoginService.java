@@ -68,9 +68,9 @@ public class LoginService {
 
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("agencyCode"	 , agencyCode);
-            userInfo.put("agencyName"    , agency.getName());
-            userInfo.put("name"		     , agency.getName());
-            userInfo.put("userType"		 , agency.getUserType());
+            userInfo.put("agencyName"    , resultAgency.getName());
+            userInfo.put("name"		     , resultAgency.getName());
+            userInfo.put("userType"		 , resultAgency.getUserType());
             userInfo.put("accessToken"   , accessToken);
 
             return userInfo;
@@ -86,20 +86,20 @@ public class LoginService {
      * @return
      * @throws java.lang.Exception
      */
-    public Map<String, Object> superUserLogin(Agency agency) throws Exception {
+    public Map<String, Object> superUserLogin(Agency resultAgency) throws Exception {
 
         Map<String, Object> result = new HashMap<>();
 
-        String agencyCode = agency.getAgencyCode();
+        String agencyCode = resultAgency.getAgencyCode();
 
         // 같을 경우 JWT 토큰 발급
         String accessToken  = jwtService.createAccessToken(agencyCode);
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("agencyCode"	 , agencyCode);
-        userInfo.put("agencyName"    , agency.getName());
-        userInfo.put("name"		     , agency.getName());
-        userInfo.put("userType"		 , agency.getUserType());
+        userInfo.put("agencyName"    , resultAgency.getName());
+        userInfo.put("name"		     , resultAgency.getName());
+        userInfo.put("userType"		 , resultAgency.getUserType());
         userInfo.put("accessToken"   , accessToken);
 
         return userInfo;
