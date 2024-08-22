@@ -9,13 +9,13 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
-    // @Query("SELECT new com.nova.nova_backend.domain.dto.AgencyMissionDTO(" +
-    //         "age.agencyName, mis.missionNo, mis.missionType, mis.missionCategory, mis.placeMid, " +
-    //         "mis.placeName, mis.placeAddress, mis.dailyWorkload, mis.totalWorkdays, mis.rankKeyword, " +
-    //         "mis.searchKeyword, mis.totalRequest, mis.adRequestDate, mis.adStartDate, mis.adEndDate, " +
-    //         "mis.missionStatus, mis.reward) " +
-    //         "FROM AgencyMission mis " +
-    //         "LEFT JOIN mis.agency age " +
-    //         "WHERE (:agencyName IS NULL OR age.agencyName LIKE %:agencyName%)")
-    // List<AgencyMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName);
+    @Query("SELECT new com.nova.nova_backend.domain.dto.AgencyMissionDTO(" +
+            "age.agencyName, mis.missionNo, mis.missionType, mis.missionCategory, mis.placeMid, " +
+            "mis.placeName, mis.placeAddress, mis.dailyWorkload, mis.totalWorkdays, mis.rankKeyword, " +
+            "mis.searchKeyword, mis.totalRequest, mis.adRequestDate, mis.adStartDate, mis.adEndDate, " +
+            "mis.missionStatus, mis.reward) " +
+            "FROM AgencyMission mis " +
+            "LEFT JOIN mis.agency age " +
+            "WHERE (:agencyName IS NULL OR age.agencyName LIKE %:agencyName%)")
+    List<AgencyMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName);
 }
