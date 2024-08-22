@@ -18,5 +18,5 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
             @Param("useYn") String useYn
     );
 
-    Agency findByLoginId(String loginId);
+    // Agency findByLoginId(String loginId);
 }
