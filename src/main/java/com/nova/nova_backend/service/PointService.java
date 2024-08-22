@@ -22,6 +22,6 @@ public class PointService {
     }
 
     public List<AgencyPointDTO> getAgencyPointByAgencyName(String agencyName) {
-        return agencyPointRepository.findPointsByAgencyName(agencyName);
+        return null; // agencyPointRepository.findPointsByAgencyName(agencyName);
     }
 }
