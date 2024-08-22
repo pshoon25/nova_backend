@@ -13,6 +13,7 @@ public class MissionService {
     private final MissionRepository missionRepository;
 
     public List<AgencyMissionDTO> getAgencyMissionListByAgencyName(String agencyName) {
-        return missionRepository.findMissionsByAgencyName(agencyName);
+        // return missionRepository.findMissionsByAgencyName(agencyName);
+        return null;
     }
 }
