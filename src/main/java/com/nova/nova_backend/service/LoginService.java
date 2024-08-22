@@ -33,7 +33,7 @@ public class LoginService {
         Map<String, Object> result = new HashMap<>();
 
         // 로그인 아이디로 정보 조회
-        Agency resultAgency = null; //agencyRepository.findByLoginId(loginId);
+        Agency resultAgency =agencyRepository.findByLoginId(loginId);
 
         if (resultAgency == null) {
             result.put("failed", "Id Failed");
