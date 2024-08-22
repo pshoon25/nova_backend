@@ -9,9 +9,9 @@ import com.nova.nova_backend.domain.dto.AgencyPointDTO;
 import java.util.List;
 
 public interface AgencyPointRepository extends JpaRepository<AgencyPoint, Long> {
-    @Query("SELECT new com.nova.nova_backend.domain.dto.AgencyPointDTO(p.availablePoints, a.placeTraffic, a.placeSave, a.placeSavePremium) " +
+    @Query("SELECT new com.nova.nova_backend.domain.dto.AgencyPointDTO(p.availablePoints) " +
             "FROM AgencyPoint p " +
-            "LEFT JOIN Agency a ON p.agencyCode = a.agencyCode " +
+            "LEFT JOIN p.agency a " +
             "WHERE a.agencyName LIKE %:agencyName%")
     List<AgencyPointDTO> findPointsByAgencyName(@Param("agencyName") String agencyName);
 }
