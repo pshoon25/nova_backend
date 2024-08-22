@@ -18,7 +18,7 @@ public class PointService {
     private final AgencyPointRepository agencyPointRepository;
 
     public List<PointHistoryDTO> getPointHistoryList(String agencyName, String status) {
-        return agencyPointHistoryRepository.findPointHistoryDetails(agencyName, status);
+        return null; // agencyPointHistoryRepository.findPointHistoryDetails(agencyName, status);
     }
 
     public List<AgencyPointDTO> getAgencyPointByAgencyName(String agencyName) {
