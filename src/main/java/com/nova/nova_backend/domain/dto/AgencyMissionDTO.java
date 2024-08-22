@@ -15,6 +15,7 @@ import java.util.Date;
 public class AgencyMissionDTO {
     private String agencyName;
     private String missionNo;
+    private String reward;
     private String missionType;
     private String missionCategory;
     private String placeMid;
@@ -33,6 +34,7 @@ public class AgencyMissionDTO {
     public AgencyMissionDTO(
             String agencyName,
             String missionNo,
+            String reward,
             String missionType,
             String missionCategory,
             String placeMid,
@@ -50,6 +52,7 @@ public class AgencyMissionDTO {
     ) {
         this.agencyName = agencyName;
         this.missionNo = missionNo;
+        this.reward = reward;
         this.missionType = missionType;
         this.missionCategory = missionCategory;
         this.placeMid = placeMid;
