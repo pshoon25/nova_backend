@@ -14,4 +14,7 @@ public interface AgencyPointRepository extends JpaRepository<AgencyPoint, Long> 
     //         "LEFT JOIN Agency a " +
     //         "WHERE a.agencyName LIKE %:agencyName%")
     // List<AgencyPointDTO> findPointsByAgencyName(@Param("agencyName") String agencyName);
+
+    @Query("SELECT ap FROM AgencyPoint ap WHERE ap.agency.agencyCode = :agencyCode")
+    AgencyPoint findByAgencyCode(@Param("agencyCode") String agencyCode);
 }

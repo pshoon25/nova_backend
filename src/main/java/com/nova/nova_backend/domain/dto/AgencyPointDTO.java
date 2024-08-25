@@ -12,14 +12,24 @@ import java.util.Date;
 @NoArgsConstructor
 public class AgencyPointDTO {
     private BigDecimal availablePoints;
-    private BigDecimal placeTraffic;
-    private BigDecimal placeSave;
-    private BigDecimal placeSavePremium;
+    private BigDecimal novaPlaceSearch;
+    private BigDecimal novaPlaceSearchSave;
+    private BigDecimal novaPlaceSearchSavePremium;
+    private BigDecimal novaPlaceKeep;
+    private BigDecimal novaSmartstoreSearch;
+    private BigDecimal olockPlaceSearch;
+    private BigDecimal olockPlaceSearchSave;
 
-    public AgencyPointDTO(BigDecimal availablePoints, BigDecimal placeTraffic, BigDecimal placeSave, BigDecimal placeSavePremium) {
+    public AgencyPointDTO(BigDecimal availablePoints,
+                          BigDecimal novaPlaceSearch, BigDecimal novaPlaceSearchSave, BigDecimal novaPlaceSearchSavePremium, BigDecimal novaPlaceKeep, BigDecimal novaSmartstoreSearch,
+                          BigDecimal olockPlaceSearch, BigDecimal olockPlaceSearchSave) {
         this.availablePoints = availablePoints;
-        this.placeTraffic = placeTraffic;
-        this.placeSave = placeSave;
-        this.placeSavePremium = placeSavePremium;
+        this.novaPlaceSearch = novaPlaceSearch;
+        this.novaPlaceSearchSave = novaPlaceSearchSave;
+        this.novaPlaceSearchSavePremium = novaPlaceSearchSavePremium;
+        this.novaPlaceKeep = novaPlaceKeep;
+        this.novaSmartstoreSearch = novaSmartstoreSearch;
+        this.olockPlaceSearch = olockPlaceSearch;
+        this.olockPlaceSearchSave = olockPlaceSearchSave;
     }
 }

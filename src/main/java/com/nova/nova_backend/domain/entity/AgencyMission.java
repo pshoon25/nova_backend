@@ -17,45 +17,42 @@ import java.util.Date;
 public class AgencyMission {
 
     @Id
-    @Column(name = "MISSION_NO", length = 50, nullable = false)
+    @Column(name = "MISSION_NO")
     private String missionNo;
 
     @ManyToOne
-    @JoinColumn(name = "AGENCY_CODE", nullable = false)
+    @JoinColumn(name = "AGENCY_CODE")
     private Agency agency;
 
-    @Column(name = "REWARD", length = 50)
+    @Column(name = "REWARD")
     private String reward;
 
-    @Column(name = "MISSION_TYPE", length = 50)
-    private String missionType;
+    @Column(name = "ITEM_NAME")
+    private String itemName;
 
-    @Column(name = "MISSION_CATEGORY", length = 50)
-    private String missionCategory;
+    @Column(name = "MID")
+    private String mid;
 
-    @Column(name = "PLACE_MID", length = 50)
-    private String placeMid;
-
-    @Column(name = "PLACE_NAME", length = 50)
+    @Column(name = "PLACE_NAME")
     private String placeName;
 
-    @Column(name = "PLACE_ADDRESS", length = 100)
-    private String placeAddress;
+    @Column(name = "PLACE_URL")
+    private String placeUrl;
 
-    @Column(name = "DAILY_WORKLOAD")
-    private Integer dailyWorkload;
+    @Column(name = "PRICE_COMPARISON_ID")
+    private String priceComparisonId;
 
-    @Column(name = "TOTAL_WORKDAYS")
-    private Integer totalWorkdays;
+    @Column(name = "MAIN_SEARCH_KEYWORD")
+    private String mainSearchKeyword;
 
-    @Column(name = "RANK_KEYWORD", length = 100)
+    @Column(name = "SUB_SEARCH_KEWYWORD")
+    private String subSearchKeyword;
+
+    @Column(name = "RANK_KEYWORD")
     private String rankKeyword;
 
-    @Column(name = "SEARCH_KEYWORD", length = 100)
-    private String searchKeyword;
-
-    @Column(name = "TOTAL_REQUEST")
-    private Integer totalRequest;
+    @Column(name = "CORRECT_ANSWER")
+    private String correctAnswer;
 
     @Column(name = "AD_REQUEST_DATE")
     @Temporal(TemporalType.DATE)
@@ -68,6 +65,15 @@ public class AgencyMission {
     @Column(name = "AD_END_DATE")
     @Temporal(TemporalType.DATE)
     private Date adEndDate;
+
+    @Column(name = "TOTAL_REQUEST")
+    private Integer totalRequest;
+
+    @Column(name = "DAILY_WORKLOAD")
+    private Integer dailyWorkload;
+
+    @Column(name = "TOTAL_WORKDAYS")
+    private Integer totalWorkdays;
 
     @Column(name = "MISSION_STATUS", length = 20)
     private String missionStatus;

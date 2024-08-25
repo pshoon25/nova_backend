@@ -18,4 +18,7 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
     //         "LEFT JOIN mis.agency age " +
     //         "WHERE (:agencyName IS NULL OR age.agencyName LIKE %:agencyName%)")
     // List<AgencyMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName);
+
+    @Query("SELECT MAX(a.missionNo) FROM AgencyMission a WHERE a.missionNo LIKE :prefix%")
+    String findMaxMissionNoStartingWith(@Param("prefix") String prefix);
 }

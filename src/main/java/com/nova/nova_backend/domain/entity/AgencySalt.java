@@ -7,15 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
-@Table(name = "T_AGENCY_POINT")
+@Table(name = "T_AGENCY_SALT")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgencyPoint {
+public class AgencySalt {
     @Id
     @Column(name = "AGENCY_CODE")
     private String agencyCode;
@@ -24,11 +23,6 @@ public class AgencyPoint {
     @JoinColumn(name = "AGENCY_CODE")
     private Agency agency;
 
-    @Column(name = "AVAILABLE_POINTS")
-    private BigDecimal availablePoints;
-
-    @Column(name = "UPDATE_DATE_TIME")
-    @Temporal(TemporalType.DATE)
-    private Date updateDateTime;
+    @Column(name = "SALT")
+    private String salt;
 }
-

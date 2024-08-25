@@ -18,19 +18,18 @@ import java.util.Date;
 public class AgencyPointHistory {
 
     @Id
-    @Column(name = "POINT_HISTORY_NO", length = 10)
+    @Column(name = "POINT_HISTORY_NO")
     private String pointHistoryNo;
 
     @ManyToOne
-    @JoinColumn(name = "AGENCY_CODE", nullable = false)
+    @JoinColumn(name = "AGENCY_CODE")
     private Agency agency;
 
     @ManyToOne
-    @JoinColumn(name = "MISSION_NO", nullable = false)
+    @JoinColumn(name = "MISSION_NO")
     private AgencyMission mission;
 
-
-    @Column(name = "CONTENT", length = 200)
+    @Column(name = "CONTENT")
     private String content;
 
     @Column(name = "POINTS")
@@ -40,6 +39,7 @@ public class AgencyPointHistory {
     @Temporal(TemporalType.DATE)
     private Date registerDateTime;
 
-    @Column(name = "STATUS", length = 10)
+    @Column(name = "STATUS")
     private String status;
+
 }

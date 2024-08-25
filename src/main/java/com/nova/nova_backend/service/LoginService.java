@@ -1,7 +1,9 @@
 package com.nova.nova_backend.service;
 
 import com.nova.nova_backend.domain.entity.Agency;
+import com.nova.nova_backend.domain.entity.AgencySalt;
 import com.nova.nova_backend.repository.AgencyRepository;
+import com.nova.nova_backend.repository.AgencySaltRepository;
 import com.nova.nova_backend.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +17,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final AgencyRepository agencyRepository;
     private final JwtService jwtService;
     private final Encrypt encrypt;
+    private final AgencyRepository agencyRepository;
+    private final AgencySaltRepository agencySaltRepository;
 
     @Value("${su_pw}")
     private String suPw;
@@ -32,13 +35,8 @@ public class LoginService {
 
         Map<String, Object> result = new HashMap<>();
 
-        System.out.println("loginId : " + loginId);
-        System.out.println("password : " + password);
-
         // 로그인 아이디로 정보 조회
         Agency resultAgency =agencyRepository.findByLoginId(loginId);
-
-         System.out.println(resultAgency);
 
         if (resultAgency == null) {
             result.put("failed", "Id Failed");
@@ -50,14 +48,22 @@ public class LoginService {
             }
         }
 
-        // 비밀번호 암호화
-        String salt = encrypt.getSalt();
-        String encodedPw = encrypt.getEncrypt(password, salt);
-
         // 관리자 로그인 확인
         if(suPw.equals(password)) {
             return superUserLogin(resultAgency);
         }
+
+        // AGENCY_CODE로 SALT 조회
+        AgencySalt agencySalt = agencySaltRepository.findByAgencyCode(resultAgency.getAgencyCode());
+
+        if (agencySalt == null) {
+            result.put("failed", "Pw Failed");
+            return result;
+        }
+
+        // 비밀번호 암호화
+        String salt = agencySalt.getSalt();
+        String encodedPw = encrypt.getEncrypt(password, salt);
 
         // 매칭
         if(resultAgency.getPassword().equals(encodedPw)) {
@@ -103,5 +109,15 @@ public class LoginService {
         userInfo.put("accessToken"   , accessToken);
 
         return userInfo;
+    }
+
+    /**
+     * 유저 로그아웃
+     * @param
+     * @return
+     * @throws java.lang.Exception
+     */
+    public void logout(String agencyCode) throws Exception {
+        jwtService.logout(agencyCode);
     }
 }

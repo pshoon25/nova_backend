@@ -1,12 +1,12 @@
 spring:
   datasource:
     url: jdbc:postgresql://61.99.10.111:5432/NOVA_TEST
-#    url: jdbc:postgresql://localhost:5432/nova_test
+#    url: jdbc:postgresql://localhost:5432/NOVA_TEST
     username: postgres
     password: tjdgns123..
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         show-sql: true

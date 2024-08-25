@@ -17,4 +17,7 @@ public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointH
             "(:status IS NULL OR p.status = :status)")
     List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName,
                                                   @Param("status") String status);
+
+    @Query("SELECT MAX(a.pointHistoryNo) FROM AgencyPointHistory a WHERE a.pointHistoryNo LIKE :prefix%")
+    String findMaxPointHistoryNoStartingWith(@Param("prefix") String prefix);
 }

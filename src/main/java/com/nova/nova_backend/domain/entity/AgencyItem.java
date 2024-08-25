@@ -19,19 +19,22 @@ public class AgencyItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ITEM_SEQ", nullable = false)
+    @Column(name = "ITEM_SEQ")
     private Long itemSeq;
 
     @ManyToOne
-    @JoinColumn(name = "AGENCY_CODE", nullable = false)
+    @JoinColumn(name = "AGENCY_CODE")
     private Agency agency;
 
-    @Column(name = "ITEM_NAME", length = 50, nullable = false)
+    @Column(name = "REWARD")
+    private String reward;
+
+    @Column(name = "ITEM_NAME")
     private String itemName;
 
-    @Column(name = "ITEM_PRICE", nullable = false)
+    @Column(name = "ITEM_PRICE")
     private BigDecimal itemPrice;
 
-    @Column(name = "USE_YN", length = 1, nullable = false)
+    @Column(name = "USE_YN")
     private String useYn;
 }
