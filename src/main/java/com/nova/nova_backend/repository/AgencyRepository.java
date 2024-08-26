@@ -32,20 +32,4 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
 
     Agency findByAgencyCode(String agencyCode);
     Agency findByLoginId(String loginId);
-
-    @Query("SELECT new com.nova.nova_backend.domain.dto.AgencyPointDTO( "
-            + "agpo.availablePoints, "
-            + "MAX(CASE WHEN agit.reward = 'NOVA' AND agit.itemName = 'PLACE_SEARCH' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'NOVA' AND agit.itemName = 'PLACE_SEARCH_SAVE' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'NOVA' AND agit.itemName = 'PLACE_SEARCH_SAVE_PREMIUM' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'NOVA' AND agit.itemName = 'PLACE_KEEP' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'NOVA' AND agit.itemName = 'SMARTSTORE_SEARCH' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'OLOCK' AND agit.itemName = 'PLACE_SEARCH' THEN agit.itemPrice ELSE null END), "
-            + "MAX(CASE WHEN agit.reward = 'OLOCK' AND agit.itemName = 'PLACE_SEARCH_SAVE' THEN agit.itemPrice ELSE null END)) "
-            + "FROM Agency age "
-            + "LEFT JOIN age.agencyItem agit "
-            + "LEFT JOIN age.agencyPoint agpo "
-            + "WHERE age.agencyCode = :agencyCode "
-            + "GROUP BY agpo.availablePoints, age.agencyCode")
-    AgencyPointDTO getAgencyPoint(@Param("agencyCode") String agencyCode);
 }

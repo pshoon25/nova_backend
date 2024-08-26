@@ -1,5 +1,6 @@
 package com.nova.nova_backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class AgencyMission {
 
     @ManyToOne
     @JoinColumn(name = "AGENCY_CODE")
+    @JsonBackReference
     private Agency agency;
 
     @Column(name = "REWARD")

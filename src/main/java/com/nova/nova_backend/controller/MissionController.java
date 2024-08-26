@@ -1,6 +1,6 @@
 package com.nova.nova_backend.controller;
 
-import com.nova.nova_backend.domain.dto.AgencyMissionDTO;
+import com.nova.nova_backend.domain.dto.AdminMissionDTO;
 import com.nova.nova_backend.domain.entity.AgencyMission;
 import com.nova.nova_backend.service.MissionService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,18 @@ public class MissionController {
 
     private final MissionService missionService;
     @GetMapping("/getAgencyMissionListByAgencyName")
-    public List<AgencyMissionDTO> getAgencyMissionListByAgencyName(@RequestParam("agencyName") String agencyName){
-        return missionService.getAgencyMissionListByAgencyName(agencyName);
+    public List<AdminMissionDTO> getAgencyMissionListByAgencyName(@RequestParam("agencyName") String agencyName,
+                                                                  @RequestParam("reward") String reward,
+                                                                  @RequestParam("itemName") String itemName){
+        return missionService.getAgencyMissionListByAgencyName(agencyName, reward, itemName);
+    }
+
+    @GetMapping("/getAgencyMissionListByAgencyCode")
+    public List<AgencyMission> getAgencyMissionListByAgencyCode(@RequestParam("agencyCode") String agencyCode,
+                                                                @RequestParam("reward") String reward,
+                                                                @RequestParam("placeName") String placeName,
+                                                                @RequestParam("itemName") String itemName){
+        return missionService.getAgencyMissionListByAgencyCode(agencyCode, reward, placeName, itemName);
     }
 
     @PostMapping("/addMissions")

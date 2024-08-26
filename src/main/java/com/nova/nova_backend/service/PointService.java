@@ -23,11 +23,11 @@ public class PointService {
         return agencyPointHistoryRepository.findPointHistoryDetails(agencyName, status);
     }
 
-    public List<AgencyPointDTO> getAgencyPointByAgencyName(String agencyName) {
-        return null; // agencyPointRepository.findPointsByAgencyName(agencyName);
+    public AgencyPointDTO getAgencyPointByAgencyName(String agencyName) {
+        return agencyPointRepository.getAgencyPointByAgencyName(agencyName);
     }
 
-    public AgencyPointDTO getAgencyPointByAgencyCode(String agnecyCode) {
-        return agencyRepository.getAgencyPoint(agnecyCode);
+    public AgencyPointDTO getAgencyPointByAgencyCode(String agencyCode) {
+        return agencyPointRepository.getAgencyPointByAgencyCode(agencyCode);
     }
 }

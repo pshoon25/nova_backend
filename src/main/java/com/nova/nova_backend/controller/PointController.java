@@ -27,7 +27,7 @@ public class PointController {
     }
 
     @GetMapping("/getAgencyPointByAgencyName")
-    public List<AgencyPointDTO> getAgencyPointByAgencyName(@RequestParam("agencyName") String agencyName) {
+    public AgencyPointDTO getAgencyPointByAgencyName(@RequestParam("agencyName") String agencyName) {
         return pointService.getAgencyPointByAgencyName(agencyName);
     }
 

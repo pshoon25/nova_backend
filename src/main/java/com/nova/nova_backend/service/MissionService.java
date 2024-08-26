@@ -1,6 +1,6 @@
 package com.nova.nova_backend.service;
 
-import com.nova.nova_backend.domain.dto.AgencyMissionDTO;
+import com.nova.nova_backend.domain.dto.AdminMissionDTO;
 import com.nova.nova_backend.domain.entity.*;
 import com.nova.nova_backend.repository.*;
 import jakarta.transaction.Transactional;
@@ -24,9 +24,12 @@ public class MissionService {
     private final AgencyPointHistoryRepository agencyPointHistoryRepository;
     private final AgencyRepository agencyRepository;
 
-    public List<AgencyMissionDTO> getAgencyMissionListByAgencyName(String agencyName) {
-        // return missionRepository.findMissionsByAgencyName(agencyName);
-        return null;
+    public List<AdminMissionDTO> getAgencyMissionListByAgencyName(String agencyName, String reward, String itemName) {
+         return missionRepository.findMissionsByAgencyName(agencyName, reward, itemName);
+    }
+
+    public List<AgencyMission> getAgencyMissionListByAgencyCode(String agencyCode, String reward, String placeName, String itemName) {
+        return missionRepository.findMissionsByAgencyCode(agencyCode, reward, placeName, itemName);
     }
 
     @Transactional

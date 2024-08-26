@@ -1,5 +1,6 @@
 package com.nova.nova_backend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +51,10 @@ public class Agency {
 
     @OneToMany(mappedBy = "agency")
     private List<AgencyItem> agencyItem;
+
+    @OneToMany(mappedBy = "agency")
+    @JsonManagedReference
+    private List<AgencyMission> agencyMission;
 
     @OneToOne(mappedBy = "agency")
     private AgencyPoint agencyPoint;
