@@ -91,9 +91,9 @@ public class MissionService {
 
         agencyMission.setAdRequestDate(new Date());
 
-        agencyMission.setTotalRequest(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalRequest", "0"))));
-        agencyMission.setDailyWorkload(Integer.parseInt(String.valueOf(requestMap.getOrDefault("dailyWorkload", "0"))));
-        agencyMission.setTotalWorkdays(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalWorkdays", "0"))));
+        agencyMission.setTotalRequest(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalRequest", 0))));
+        agencyMission.setDailyWorkload(Integer.parseInt(String.valueOf(requestMap.getOrDefault("dailyWorkload", 0))));
+        agencyMission.setTotalWorkdays(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalWorkdays", 0))));
 
         agencyMission.setMissionStatus(String.valueOf(requestMap.getOrDefault("missionStatus", "")));
 
@@ -157,5 +157,23 @@ public class MissionService {
         // 새로운 코드 생성, 숫자 부분을 8자리로 포맷
         String newPointHistoryNo = String.format("%s%08d", today, newCodeNumber);
         return newPointHistoryNo;
+    }
+
+    @Transactional
+    public String saveNovaMissionStatus(List<Map<String, Object>> requestMapList) {
+        try {
+            for (Map<String, Object> map : requestMapList) {
+                String missionNo = String.valueOf(map.get("missionNo"));
+                String missionStatus = String.valueOf(map.get("missionStatus"));
+
+                if (missionNo != null && missionStatus != null) {
+                    missionRepository.updateMissionStatus(missionNo, missionStatus);
+                }
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            System.err.println("Error updating mission statuses: " + e.getMessage());
+            return "FAIL";
+        }
     }
 }

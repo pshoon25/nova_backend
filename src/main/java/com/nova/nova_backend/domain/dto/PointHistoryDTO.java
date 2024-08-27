@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PointHistoryDTO {
     private String pointHistoryNo;
+    private String reward;
     private String agencyName;
     private String missionNo;
     private String content;
@@ -20,8 +21,9 @@ public class PointHistoryDTO {
     private Date registerDateTime;
     private String status;
 
-    public PointHistoryDTO(String pointHistoryNo, String agencyName, String missionNo, String content, BigDecimal points, Date registerDateTime, String status) {
+    public PointHistoryDTO(String pointHistoryNo, String reward, String agencyName, String missionNo, String content, BigDecimal points, Date registerDateTime, String status) {
         this.pointHistoryNo = pointHistoryNo;
+        this.reward = reward;
         this.agencyName = agencyName;
         this.missionNo = missionNo;
         this.content = content;

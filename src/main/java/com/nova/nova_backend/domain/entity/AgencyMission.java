@@ -77,6 +77,6 @@ public class AgencyMission {
     @Column(name = "TOTAL_WORKDAYS")
     private Integer totalWorkdays;
 
-    @Column(name = "MISSION_STATUS", length = 20)
+    @Column(name = "MISSION_STATUS")
     private String missionStatus;
 }

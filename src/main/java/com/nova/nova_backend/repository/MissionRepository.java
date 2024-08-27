@@ -4,6 +4,7 @@ import com.nova.nova_backend.domain.dto.AdminMissionDTO;
 import com.nova.nova_backend.domain.entity.Agency;
 import com.nova.nova_backend.domain.entity.AgencyMission;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -52,4 +53,9 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
 
     @Query("SELECT MAX(a.missionNo) FROM AgencyMission a WHERE a.missionNo LIKE :prefix%")
     String findMaxMissionNoStartingWith(@Param("prefix") String prefix);
+
+    @Modifying
+    @Query("UPDATE AgencyMission a SET a.missionStatus = :missionStatus WHERE a.missionNo = :missionNo")
+    void updateMissionStatus(@Param("missionNo") String missionNo,
+                             @Param("missionStatus") String missionStatus);
 }

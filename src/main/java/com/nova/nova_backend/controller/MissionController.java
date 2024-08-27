@@ -34,4 +34,9 @@ public class MissionController {
     public String insertAgencyMission(@RequestBody Map<String, Object> requestMap) {
         return missionService.insertAgencyMission(requestMap);
     }
+
+    @PostMapping("/saveNovaMissionStatus")
+    public String saveNovaMissionStatus(@RequestBody List<Map<String, Object>> requestMapList) throws Exception {
+        return missionService.saveNovaMissionStatus(requestMapList);
+    }
 }
