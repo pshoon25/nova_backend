@@ -57,11 +57,11 @@ public class JwtService {
 
         // 쿠키 설정 및 response에 추가
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-                .maxAge(24 * 60 * 60)  // 쿠키 만료일을 1년으로 설정 (단위: 초)
-                .sameSite("None")                    // SameSite 속성 설정 (크로스 사이트 요청에서 쿠키를 포함시키기 위해 None으로 설정)
-                .secure(true)                        // HTTPS에서만 전송
-                .path("/")                           // 쿠키의 유효 경로 설정 ("/"로 설정하여 전체 도메인에서 유효하게 만듦)
-                .httpOnly(true)                      // HttpOnly 속성 설정 (JavaScript에서 접근 불가능하게 만듦)
+                .maxAge(1000 * 60 * 60 * 24)  // 쿠키 만료일을 1년으로 설정
+                .sameSite("None")                           // SameSite 속성 설정 (크로스 사이트 요청에서 쿠키를 포함시키기 위해 None으로 설정)
+                .secure(true)                               // HTTPS에서만 전송
+                .path("/")                                  // 쿠키의 유효 경로 설정 ("/"로 설정하여 전체 도메인에서 유효하게 만듦)
+                .httpOnly(true)                             // HttpOnly 속성 설정 (JavaScript에서 접근 불가능하게 만듦)
                 .build();
 
         response.addHeader("Set-Cookie", cookie.toString());  // 쿠키를 응답 헤더에 추가
@@ -88,9 +88,8 @@ public class JwtService {
     }
 
     public Map<String, String> isValidTokens(Map<String, Object> requestMap){   //엑세스 토큰과 리프레쉬 토큰의 유효성을 둘다 검사
-        //check both refresh AND access token
         String accessToken  = getAccessToken();
-        String refreshToken = getRefreshToken(String.valueOf(requestMap.get("userMngCode")));
+        String refreshToken = getRefreshToken(String.valueOf(requestMap.get("agencyCode")));
         Map<String, String> result = new HashMap<>();
         if (!isValidAccessToken(accessToken)) {
             return isValidRefreshToken(refreshToken);

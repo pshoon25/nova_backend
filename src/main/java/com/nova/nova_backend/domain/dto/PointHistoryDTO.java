@@ -20,8 +20,9 @@ public class PointHistoryDTO {
     private BigDecimal points;
     private Date registerDateTime;
     private String status;
+    private String depositor;
 
-    public PointHistoryDTO(String pointHistoryNo, String reward, String agencyName, String missionNo, String content, BigDecimal points, Date registerDateTime, String status) {
+    public PointHistoryDTO(String pointHistoryNo, String reward, String agencyName, String missionNo, String content, BigDecimal points, Date registerDateTime, String status, String depositor) {
         this.pointHistoryNo = pointHistoryNo;
         this.reward = reward;
         this.agencyName = agencyName;
@@ -30,5 +31,6 @@ public class PointHistoryDTO {
         this.points = points;
         this.registerDateTime = registerDateTime;
         this.status = status;
+        this.depositor = depositor;
     }
 }

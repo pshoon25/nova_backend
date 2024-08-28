@@ -6,12 +6,10 @@ import com.nova.nova_backend.domain.entity.Agency;
 import com.nova.nova_backend.domain.entity.AgencyPointHistory;
 import com.nova.nova_backend.service.PointService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/point")
@@ -34,5 +32,15 @@ public class PointController {
     @GetMapping("/getAgencyPointByAgencyCode")
     public AgencyPointDTO getAgencyPointByAgencyCode(@RequestParam("agencyCode") String agencyCode) {
         return pointService.getAgencyPointByAgencyCode(agencyCode);
+    }
+
+    @PostMapping("/requestPointRecharge")
+    public String requestPointRecharge(@RequestBody Map<String, Object> requestMap) {
+        return pointService.requestPointRecharge(requestMap);
+    }
+
+    @PostMapping("/approveRecharge")
+    public String approveRecharge(@RequestBody Map<String, Object> requestMap) {
+        return pointService.approveRecharge(requestMap);
     }
 }

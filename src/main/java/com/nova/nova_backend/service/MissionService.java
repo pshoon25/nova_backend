@@ -95,7 +95,7 @@ public class MissionService {
         agencyMission.setDailyWorkload(Integer.parseInt(String.valueOf(requestMap.getOrDefault("dailyWorkload", 0))));
         agencyMission.setTotalWorkdays(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalWorkdays", 0))));
 
-        agencyMission.setMissionStatus(String.valueOf(requestMap.getOrDefault("missionStatus", "")));
+        agencyMission.setMissionStatus("WATING");
 
         agencyMission = missionRepository.save(agencyMission);
 
@@ -118,7 +118,7 @@ public class MissionService {
         agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().subtract(agencyItem.getItemPrice()));
         agencyPointRepository.save(agencyPoint);
 
-        return "SEUCCESS";
+        return "SUCCESS";
     }
 
     private synchronized String generateMissionNo() {
@@ -140,7 +140,7 @@ public class MissionService {
         return newMissionNo;
     }
 
-    private synchronized String generateHistoryNo() {
+    public synchronized String generateHistoryNo() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String today = dateFormat.format(new Date());
 

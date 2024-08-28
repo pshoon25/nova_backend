@@ -9,10 +9,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointHistory, Long> {
-    @Query("SELECT new com.nova.nova_backend.domain.dto.PointHistoryDTO(p.pointHistoryNo, m.reward, a.agencyName, m.missionNo, p.content, p.points, p.registerDateTime, p.status) " +
+    @Query("SELECT new com.nova.nova_backend.domain.dto.PointHistoryDTO(p.pointHistoryNo, m.reward, a.agencyName, m.missionNo, p.content, p.points, p.registerDateTime, p.status, d.depositor) " +
             "FROM AgencyPointHistory p " +
             "LEFT JOIN p.agency a " +
             "LEFT JOIN p.mission m " +
+            "LEFT JOIN AgencyDepositInfo d ON (d.pointHistoryNo = p.pointHistoryNo) " +
             "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) AND " +
             "(:status IS NULL OR p.status = :status)")
     List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName,
@@ -20,4 +21,6 @@ public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointH
 
     @Query("SELECT MAX(a.pointHistoryNo) FROM AgencyPointHistory a WHERE a.pointHistoryNo LIKE :prefix%")
     String findMaxPointHistoryNoStartingWith(@Param("prefix") String prefix);
+
+    AgencyPointHistory findByPointHistoryNo(String pointHistoryNo);
 }
