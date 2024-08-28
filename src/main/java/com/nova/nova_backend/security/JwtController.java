@@ -13,7 +13,7 @@ public class JwtController {
     private final JwtService jwtService;
 
     @PostMapping("/jwtCheck")
-    public Map<String, String> jwtCheck(@RequestBody Map<String, Object> requestMap) throws Exception {
-        return jwtService.isValidTokens(requestMap);
+    public Map<String, String> jwtCheck() throws Exception {
+        return jwtService.isValidTokens();
     }
 }

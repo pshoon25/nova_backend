@@ -1,6 +1,7 @@
 package com.nova.nova_backend.controller;
 
 import com.nova.nova_backend.service.LoginService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,9 @@ public class LoginController {
     private final LoginService loginService;
     @GetMapping("/login")
     public Map<String, Object> login(@RequestParam("loginId") String loginId,
-                                     @RequestParam("password") String password) throws Exception {
-        return loginService.checkLoginAuth(loginId, password);
+                                     @RequestParam("password") String password,
+                                     HttpServletResponse response) throws Exception {
+        return loginService.checkLoginAuth(loginId, password, response);
     }
 
     /**

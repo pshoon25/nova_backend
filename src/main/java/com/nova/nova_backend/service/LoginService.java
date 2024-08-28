@@ -5,6 +5,7 @@ import com.nova.nova_backend.domain.entity.AgencySalt;
 import com.nova.nova_backend.repository.AgencyRepository;
 import com.nova.nova_backend.repository.AgencySaltRepository;
 import com.nova.nova_backend.security.JwtService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class LoginService {
      * @return
      * @throws java.lang.Exception
      */
-    public Map<String, Object> checkLoginAuth(String loginId, String password) throws Exception {
+    public Map<String, Object> checkLoginAuth(String loginId, String password, HttpServletResponse response) throws Exception {
 
         Map<String, Object> result = new HashMap<>();
 
@@ -71,6 +72,7 @@ public class LoginService {
 
             // 같을 경우 JWT 토큰 발급
             String accessToken  = jwtService.createAccessToken(agencyCode);
+            jwtService.createRefreshToken(agencyCode, response);
 
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("agencyCode"	 , agencyCode);
@@ -118,6 +120,6 @@ public class LoginService {
      * @throws java.lang.Exception
      */
     public void logout(String agencyCode) throws Exception {
-        jwtService.logout(agencyCode);
+        jwtService.logout();
     }
 }
