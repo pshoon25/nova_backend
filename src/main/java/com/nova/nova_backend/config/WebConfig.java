@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
+                        .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr", "https://www.rs-nova.co.kr/api")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("Gmt-Time", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers", "Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization", "Cache-Control", "Access-Control-Allow-Origin", "Access-Token")
                         .allowCredentials(true)
