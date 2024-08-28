@@ -119,7 +119,7 @@ public class LoginService {
      * @return
      * @throws java.lang.Exception
      */
-    public void logout(String agencyCode) throws Exception {
+    public void logout() throws Exception {
         jwtService.logout();
     }
 }

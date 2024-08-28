@@ -25,7 +25,7 @@ public class LoginController {
      * @throws java.lang.Exception
      */
     @PostMapping("/logout")
-    public void userLogout(@RequestBody String agencyCode) throws Exception {
-        loginService.logout(agencyCode);
+    public void userLogout() throws Exception {
+        loginService.logout();
     }
 }
