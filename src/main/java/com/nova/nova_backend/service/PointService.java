@@ -83,18 +83,20 @@ public class PointService {
 
             // T_AGENCY_POINT.AVAILABLE_POINTS 조회 후 T_AGENCY_POINT_HISTORY의 POINTS 값을 더한 후 저장
             Agency agency = pointHistory.getAgency();
+
+            // AgencyPoint 조회
             AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agency.getAgencyCode());
-
-            BigDecimal updatedPoints = BigDecimal.valueOf(0);
-
-            if(agencyPoint == null) {
-                updatedPoints = pointHistory.getPoints();
+            if (agencyPoint == null) {
+                // AgencyPoint가 존재하지 않으면 새로 생성
+                agencyPoint = new AgencyPoint();
+                agencyPoint.setAgency(agency);
+                agencyPoint.setAvailablePoints(pointHistory.getPoints()); // 초기 포인트 설정
             } else {
-                updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
+                // AgencyPoint가 존재하면 포인트 업데이트
+                BigDecimal updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
+                agencyPoint.setAvailablePoints(updatedPoints);
             }
 
-            agencyPoint.setAgency(agency);
-            agencyPoint.setAvailablePoints(updatedPoints);
             agencyPoint.setUpdateDateTime(new Date());
             agencyPointRepository.save(agencyPoint);
 
