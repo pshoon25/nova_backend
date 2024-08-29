@@ -75,14 +75,7 @@ public class PointService {
         try {
             // PointHistoryNo를 이용해 T_AGENCY_POINT_HISTORY에서 기록을 조회
             String pointHistoryNo = (String) requestMap.get("pointHistoryNo");
-            if (pointHistoryNo == null || pointHistoryNo.isEmpty()) {
-                throw new IllegalArgumentException("PointHistoryNo is required.");
-            }
-
             AgencyPointHistory pointHistory = agencyPointHistoryRepository.findByPointHistoryNo(pointHistoryNo);
-            if (pointHistory == null) {
-                throw new IllegalArgumentException("Point history not found for the provided PointHistoryNo.");
-            }
 
             // T_AGENCY_POINT_HISTORY.STATUS 의 상태값을 RECHARGE 로 변경
             pointHistory.setStatus("RECHARGE");
@@ -90,16 +83,17 @@ public class PointService {
 
             // T_AGENCY_POINT.AVAILABLE_POINTS 조회 후 T_AGENCY_POINT_HISTORY의 POINTS 값을 더한 후 저장
             Agency agency = pointHistory.getAgency();
-            if (agency == null) {
-                throw new IllegalArgumentException("Agency information is missing in point history.");
-            }
-
             AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agency.getAgencyCode());
-            if (agencyPoint == null) {
-                throw new IllegalArgumentException("AgencyPoint not found for the provided AgencyCode.");
+
+            BigDecimal updatedPoints = BigDecimal.valueOf(0);
+
+            if(agencyPoint == null) {
+                updatedPoints = pointHistory.getPoints();
+            } else {
+                updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
             }
 
-            BigDecimal updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
+            agencyPoint.setAgencyCode(agency.getAgencyCode());
             agencyPoint.setAvailablePoints(updatedPoints);
             agencyPoint.setUpdateDateTime(new Date());
             agencyPointRepository.save(agencyPoint);
@@ -110,4 +104,5 @@ public class PointService {
             return "FAILED";
         }
     }
+
 }
