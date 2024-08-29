@@ -28,7 +28,7 @@ public class AgencyPoint {
     private BigDecimal availablePoints;
 
     @Column(name = "UPDATE_DATE_TIME")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateDateTime;
 }
 
