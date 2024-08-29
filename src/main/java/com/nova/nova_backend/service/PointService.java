@@ -83,22 +83,26 @@ public class PointService {
 
             // T_AGENCY_POINT.AVAILABLE_POINTS 조회 후 T_AGENCY_POINT_HISTORY의 POINTS 값을 더한 후 저장
             Agency agency = pointHistory.getAgency();
+            String agencyCode = agency.getAgencyCode();
 
-            // AgencyPoint 조회
-            AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agency.getAgencyCode());
-            if (agencyPoint == null) {
-                // AgencyPoint가 존재하지 않으면 새로 생성
-                agencyPoint = new AgencyPoint();
-                agencyPoint.setAgency(agency);
-                agencyPoint.setAvailablePoints(pointHistory.getPoints()); // 초기 포인트 설정
+            // AgencyPoint 엔티티 조회
+            AgencyPoint existingAgencyPoint = agencyPointRepository.findByAgencyCode(agencyCode);
+
+            // 기존 엔티티가 없는 경우 새로 생성
+            if (existingAgencyPoint == null) {
+                existingAgencyPoint = new AgencyPoint();
+                existingAgencyPoint.setAgencyCode(agencyCode);
+                existingAgencyPoint.setAgency(agency);
+                existingAgencyPoint.setAvailablePoints(pointHistory.getPoints());
+                existingAgencyPoint.setUpdateDateTime(new Date());
+                agencyPointRepository.save(existingAgencyPoint);
             } else {
-                // AgencyPoint가 존재하면 포인트 업데이트
-                BigDecimal updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
-                agencyPoint.setAvailablePoints(updatedPoints);
+                // 기존 엔티티가 있는 경우 업데이트
+                BigDecimal updatedPoints = existingAgencyPoint.getAvailablePoints().add(pointHistory.getPoints());
+                existingAgencyPoint.setAvailablePoints(updatedPoints);
+                existingAgencyPoint.setUpdateDateTime(new Date());
+                agencyPointRepository.save(existingAgencyPoint);
             }
-
-            agencyPoint.setUpdateDateTime(new Date());
-            agencyPointRepository.save(agencyPoint);
 
             return "SUCCESS";
         } catch (Exception e) {
