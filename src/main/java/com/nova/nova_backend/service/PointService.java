@@ -93,7 +93,7 @@ public class PointService {
                 updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
             }
 
-            agencyPoint.setAgencyCode(agency.getAgencyCode());
+            agencyPoint.setAgency(agency);
             agencyPoint.setAvailablePoints(updatedPoints);
             agencyPoint.setUpdateDateTime(new Date());
             agencyPointRepository.save(agencyPoint);
