@@ -86,23 +86,23 @@ public class PointService {
             String agencyCode = agency.getAgencyCode();
 
             // AgencyPoint 엔티티 조회
-            AgencyPoint existingAgencyPoint = agencyPointRepository.findByAgencyCode(agencyCode);
+            AgencyPoint existingAgencyPoint = agencyPointRepository.findById(agencyCode).orElse(null);
 
-            // 기존 엔티티가 없는 경우 새로 생성
             if (existingAgencyPoint == null) {
+                // 엔티티가 없으면 새로 생성
                 existingAgencyPoint = new AgencyPoint();
                 existingAgencyPoint.setAgencyCode(agencyCode);
                 existingAgencyPoint.setAgency(agency);
                 existingAgencyPoint.setAvailablePoints(pointHistory.getPoints());
                 existingAgencyPoint.setUpdateDateTime(new Date());
-                agencyPointRepository.save(existingAgencyPoint);
             } else {
-                // 기존 엔티티가 있는 경우 업데이트
+                // 엔티티가 있으면 업데이트
                 BigDecimal updatedPoints = existingAgencyPoint.getAvailablePoints().add(pointHistory.getPoints());
                 existingAgencyPoint.setAvailablePoints(updatedPoints);
                 existingAgencyPoint.setUpdateDateTime(new Date());
-                agencyPointRepository.save(existingAgencyPoint);
             }
+
+            agencyPointRepository.save(existingAgencyPoint);
 
             return "SUCCESS";
         } catch (Exception e) {
@@ -110,5 +110,4 @@ public class PointService {
             return "FAILED";
         }
     }
-
 }
