@@ -20,7 +20,8 @@ public class AgencyPoint {
     @Column(name = "AGENCY_CODE")
     private String agencyCode;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "AGENCY_CODE")
     private Agency agency;
 
@@ -28,7 +29,7 @@ public class AgencyPoint {
     private BigDecimal availablePoints;
 
     @Column(name = "UPDATE_DATE_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date updateDateTime;
 }
 
