@@ -86,7 +86,7 @@ public class PointService {
             String agencyCode = agency.getAgencyCode();
 
             // AgencyPoint 엔티티 조회
-            AgencyPoint existingAgencyPoint = agencyPointRepository.findById(agencyCode).orElse(null);
+            AgencyPoint existingAgencyPoint = agencyPointRepository.findByAgencyCode(agencyCode);
 
             if (existingAgencyPoint == null) {
                 // 엔티티가 없으면 새로 생성
