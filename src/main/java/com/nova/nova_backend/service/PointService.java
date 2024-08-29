@@ -86,7 +86,9 @@ public class PointService {
             AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agency.getAgencyCode());
 
             BigDecimal updatedPoints = agencyPoint.getAvailablePoints().add(pointHistory.getPoints());
+            agencyPoint.setAgencyCode(agency.getAgencyCode());
             agencyPoint.setAvailablePoints(updatedPoints);
+            agencyPoint.setUpdateDateTime(new Date());
             agencyPointRepository.save(agencyPoint);
 
             return "SUCCESS";
