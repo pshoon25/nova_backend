@@ -11,11 +11,21 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
+            // @Override
+            // public void addCorsMappings(CorsRegistry registry) {
+            //     registry.addMapping("/**")
+            //             .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
+            //             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+            //             .allowedHeaders("*")
+            //             //.allowedHeaders("Gmt-Time", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers", "Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization", "Cache-Control", "Access-Control-Allow-Origin", "Access-Token")
+            //             .allowCredentials(true)
+            //             .maxAge(3600);
+            // }
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://*.rs-nova.co.kr", "https://*.rs-nova.co.kr")
+                        .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true)
