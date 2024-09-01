@@ -46,45 +46,6 @@ public class WebConfig {
 
                 chain.doFilter(request, response);
             }
-
-            @Override
-            public void init(FilterConfig filterConfig) throws ServletException {
-                // 초기화 로직이 필요한 경우 여기에 추가
-            }
-
-            @Override
-            public void destroy() {
-                // 필터 종료 시 리소스를 해제하는 로직이 필요한 경우 여기에 추가
-            }
         };
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                        .allowedHeaders("*")
-                        .allowCredentials(true)
-                        .maxAge(3600);
-            }
-        };
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr"));
-        corsConfiguration.setAllowedHeaders(List.of("*"));
-        corsConfiguration.setMaxAge(3600L);
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH"));
-        corsConfiguration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
-        return source;
     }
 }
