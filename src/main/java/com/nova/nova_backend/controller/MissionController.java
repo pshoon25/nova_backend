@@ -29,14 +29,10 @@ public class MissionController {
     private final MissionService missionService;
 
     @GetMapping("/missionExcelDownload")
-    public ResponseEntity<?> missionExcelDownload(@RequestParam("agencyName") String agencyName,
-                                                  @RequestParam("reward") String reward,
-                                                  @RequestParam("itemName") String itemName,
-                                                  HttpServletResponse response) throws IOException {
-        // agencyName이 JSON 문자열로 전달되었을 경우, 이를 다시 객체로 변환
-        AdminMissionDTO agency = new ObjectMapper().readValue(agencyName, AdminMissionDTO.class);
-        // Default 값 처리
-        agencyName = (agencyName == null || agencyName.isEmpty()) ? "" : agencyName;
+    public ResponseEntity<?> missionExcelDownload(
+            @RequestParam("agencyName") String agencyName,
+            @RequestParam("reward") String reward,
+            @RequestParam("itemName") String itemName) throws IOException {
 
         // 미션 리스트를 가져오는 서비스 호출
         List<AdminMissionDTO> missionList = missionService.getAgencyMissionListByAgencyName(agencyName, reward, itemName);
@@ -45,21 +41,90 @@ public class MissionController {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Mission List");
 
-            // 헤더 행 생성
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Agency Name");
-            headerRow.createCell(1).setCellValue("Reward");
-            headerRow.createCell(2).setCellValue("Place Name");
-            headerRow.createCell(3).setCellValue("Item Name");
+            if ("NOVA".equals(reward)) {
+                // 헤더 행 생성
+                Row headerRow = sheet.createRow(0);
+                headerRow.createCell(0).setCellValue("미션번호");
+                headerRow.createCell(1).setCellValue("대행사");
+                headerRow.createCell(2).setCellValue("종류");
+                headerRow.createCell(3).setCellValue("유형");
+                headerRow.createCell(4).setCellValue("MID");
+                headerRow.createCell(5).setCellValue("가격비교 ID");
+                headerRow.createCell(6).setCellValue("광고 시작일");
+                headerRow.createCell(7).setCellValue("1일 작업량");
+                headerRow.createCell(8).setCellValue("총 작업일수");
+                headerRow.createCell(9).setCellValue("업체명");
+                headerRow.createCell(10).setCellValue("순위키워드");
+                headerRow.createCell(11).setCellValue("메인검색 키워드");
+                headerRow.createCell(12).setCellValue("3위이내검색 키워드");
+                headerRow.createCell(13).setCellValue("광고종료일");
+                headerRow.createCell(14).setCellValue("플레이스주소");
+                headerRow.createCell(15).setCellValue("총요청량");
+                headerRow.createCell(16).setCellValue("미션상태");
 
-            // 데이터 행 생성
-            int rowNum = 1;
-            for (AdminMissionDTO mission : missionList) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(mission.getAgencyName());
-                row.createCell(1).setCellValue(mission.getReward());
-                row.createCell(2).setCellValue(mission.getPlaceName());
-                row.createCell(3).setCellValue(mission.getItemName());
+                // 데이터 행 생성
+                int rowNum = 1;
+                for (AdminMissionDTO mission : missionList) {
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue(mission.getMissionNo());
+                    row.createCell(1).setCellValue(mission.getAgencyName());
+                    row.createCell(2).setCellValue(mission.getItemName().startsWith("PLACE") ? "PLACE" : mission.getItemName().startsWith("SMARTSTORE") ? "SMARTSTORE" : "");
+                    row.createCell(3).setCellValue(mission.getItemName());
+                    row.createCell(4).setCellValue(mission.getMid());
+                    row.createCell(5).setCellValue(mission.getPriceComparisonId());
+                    row.createCell(6).setCellValue(mission.getAdStartDate());
+                    row.createCell(7).setCellValue(mission.getDailyWorkload());
+                    row.createCell(8).setCellValue(mission.getTotalWorkdays());
+                    row.createCell(9).setCellValue(mission.getPlaceName());
+                    row.createCell(10).setCellValue(mission.getRankKeyword());
+                    row.createCell(11).setCellValue(mission.getMainSearchKeyword());
+                    row.createCell(12).setCellValue(mission.getSubSearchKeyword());
+                    row.createCell(13).setCellValue(mission.getAdEndDate());
+                    row.createCell(14).setCellValue(mission.getPlaceUrl());
+                    row.createCell(15).setCellValue(mission.getTotalRequest());
+                    row.createCell(16).setCellValue(mission.getMissionStatus());
+                }
+            } else if ("OLOCK".equals(reward)) {
+                // 헤더 행 생성
+                Row headerRow = sheet.createRow(0);
+                headerRow.createCell(0).setCellValue("미션번호");
+                headerRow.createCell(1).setCellValue("대행사");
+                headerRow.createCell(2).setCellValue("종류");
+                headerRow.createCell(3).setCellValue("MID");
+                headerRow.createCell(4).setCellValue("가격비교 ID");
+                headerRow.createCell(5).setCellValue("광고 시작일");
+                headerRow.createCell(6).setCellValue("1일 작업량");
+                headerRow.createCell(7).setCellValue("총 작업일수");
+                headerRow.createCell(8).setCellValue("업체명");
+                headerRow.createCell(9).setCellValue("업체명구분용");
+                headerRow.createCell(10).setCellValue("메인검색 키워드");
+                headerRow.createCell(11).setCellValue("정답 (주변- 명소 1번째)");
+                headerRow.createCell(12).setCellValue("광고종료일");
+                headerRow.createCell(13).setCellValue("플레이스주소");
+                headerRow.createCell(14).setCellValue("총요청량");
+                headerRow.createCell(15).setCellValue("미션상태");
+
+                // 데이터 행 생성
+                int rowNum = 1;
+                for (AdminMissionDTO mission : missionList) {
+                    Row row = sheet.createRow(rowNum++);
+                    row.createCell(0).setCellValue(mission.getMissionNo());
+                    row.createCell(1).setCellValue(mission.getAgencyName());
+                    row.createCell(2).setCellValue(mission.getItemName());
+                    row.createCell(3).setCellValue(mission.getMid());
+                    row.createCell(4).setCellValue(mission.getPriceComparisonId());
+                    row.createCell(5).setCellValue(mission.getAdStartDate());
+                    row.createCell(6).setCellValue(mission.getDailyWorkload());
+                    row.createCell(7).setCellValue(mission.getTotalWorkdays());
+                    row.createCell(8).setCellValue(mission.getPlaceName());
+                    row.createCell(9).setCellValue("");
+                    row.createCell(10).setCellValue(mission.getMainSearchKeyword());
+                    row.createCell(11).setCellValue(mission.getCorrectAnswer());
+                    row.createCell(12).setCellValue(mission.getAdEndDate());
+                    row.createCell(13).setCellValue(mission.getPlaceUrl());
+                    row.createCell(14).setCellValue(mission.getTotalRequest());
+                    row.createCell(15).setCellValue(mission.getMissionStatus());
+                }
             }
 
             // 엑셀 파일을 바이트 배열로 변환

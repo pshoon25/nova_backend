@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -45,8 +46,42 @@ public class MissionService {
         String itemName = String.valueOf(requestMap.getOrDefault("itemName", ""));
         AgencyItem agencyItem = agencyItemRepository.findByAgencyCodeAndRewardAndItemName(agencyCode, reward, itemName);
 
+        // String을 Date로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date adStartDate = new Date();
+        Date adEndDate = new Date();
+
+        try {
+            // 문자열을 LocalDate로 변환
+            LocalDate localAdStartDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("adStartDate", "")), formatter);
+            LocalDate localAdEndDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("adEndDate", "")), formatter);
+
+            // LocalDate를 Date로 변환
+            adStartDate = Date.from(localAdStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            adEndDate = Date.from(localAdEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 날짜 차이 계산 (일수)
+        long duration = adEndDate.getTime() - adStartDate.getTime();
+
+        // 총 요청일 수
+        long totalWorkdays = (duration / (1000 * 60 * 60 * 24)) + 1; // 밀리초를 일수로 변환
+
+        // 일일 작업량 계산
+        int dailyWorkload = Integer.parseInt(String.valueOf(requestMap.getOrDefault("dailyWorkload", 0)));
+
+        // 총 요청량
+        int totalRequest = (int) (totalWorkdays * dailyWorkload);
+
+        // 차감할 포인트 계산
+        BigDecimal deductionPoints = agencyItem.getItemPrice().multiply(BigDecimal.valueOf(totalWorkdays)).multiply(BigDecimal.valueOf(dailyWorkload));
+
+
         // 잔액이 없을 경우
-        if (agencyPoint == null || agencyPoint.getAvailablePoints().compareTo(agencyItem.getItemPrice()) <= 0) {
+        if (agencyPoint == null || agencyPoint.getAvailablePoints().compareTo(deductionPoints) <= 0) {
             return "NO POINTS";
         }
 
@@ -66,34 +101,18 @@ public class MissionService {
         agencyMission.setPlaceName(String.valueOf(requestMap.getOrDefault("placeName", "")));
         agencyMission.setPlaceUrl(String.valueOf(requestMap.getOrDefault("placeUrl", "")));
         agencyMission.setPriceComparisonId(String.valueOf(requestMap.getOrDefault("priceComparisonId", "")));
-        agencyMission.setMainSearchKeyword(String.valueOf(requestMap.getOrDefault("mainSearchKeywords", "")));
+        agencyMission.setMainSearchKeyword(String.valueOf(requestMap.getOrDefault("mainSearchKeyword", "")));
         agencyMission.setSubSearchKeyword(String.valueOf(requestMap.getOrDefault("subSearchKeyword", "")));
         agencyMission.setRankKeyword(String.valueOf(requestMap.getOrDefault("rankKeyword", "")));
         agencyMission.setCorrectAnswer(String.valueOf(requestMap.getOrDefault("correctAnswer", "")));
-
-        // String을 Date로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        try {
-            // 문자열을 LocalDate로 변환
-            LocalDate localAdStartDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("adStartDate", "")), formatter);
-            LocalDate localAdEndDate = LocalDate.parse(String.valueOf(requestMap.getOrDefault("adEndDate", "")), formatter);
-
-            // LocalDate를 Date로 변환
-            Date adStartDate = Date.from(localAdStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date adEndDate = Date.from(localAdEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-            agencyMission.setAdStartDate(adStartDate);
-            agencyMission.setAdEndDate(adEndDate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        agencyMission.setAdStartDate(adStartDate);
+        agencyMission.setAdEndDate(adEndDate);
 
         agencyMission.setAdRequestDate(new Date());
 
-        agencyMission.setTotalRequest(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalRequest", 0))));
+        agencyMission.setTotalRequest(totalRequest);
         agencyMission.setDailyWorkload(Integer.parseInt(String.valueOf(requestMap.getOrDefault("dailyWorkload", 0))));
-        agencyMission.setTotalWorkdays(Integer.parseInt(String.valueOf(requestMap.getOrDefault("totalWorkdays", 0))));
+        agencyMission.setTotalWorkdays((int) totalWorkdays);
 
         agencyMission.setMissionStatus("WATING");
 
@@ -108,14 +127,14 @@ public class MissionService {
         agencyPointHistory.setAgency(agency);
         agencyPointHistory.setMission(agencyMission);
         agencyPointHistory.setContent("Mission Add");
-        agencyPointHistory.setPoints(agencyItem.getItemPrice());
+        agencyPointHistory.setPoints(deductionPoints);
         agencyPointHistory.setRegisterDateTime(new Date());
         agencyPointHistory.setStatus("DEDUCTION");
 
         agencyPointHistoryRepository.save(agencyPointHistory);
 
         // T_AGENCY_POINT.AVAILABLE_POINTS 차감
-        agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().subtract(agencyItem.getItemPrice()));
+        agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().subtract(deductionPoints));
         agencyPointRepository.save(agencyPoint);
 
         return "SUCCESS";
