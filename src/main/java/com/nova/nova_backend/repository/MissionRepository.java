@@ -36,7 +36,8 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
             "LEFT JOIN Agency a ON m.agency.agencyCode = a.agencyCode " +
             "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) " +
             "AND m.reward = :reward " +
-            "AND (:itemName = '' OR m.itemName = :itemName)")
+            "AND (:itemName = '' OR m.itemName = :itemName) " +
+            "ORDER BY m.adRequestDate DESC")
     List<AdminMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName,
                                                  @Param("reward") String reward,
                                                  @Param("itemName") String itemName);
@@ -45,7 +46,8 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
             "WHERE a.agency.agencyCode = :agencyCode " +
             "AND a.reward = :reward " +
             "AND (:placeName IS NULL OR a.placeName LIKE %:placeName%) " +
-            "AND (:itemName = '' OR a.itemName = :itemName)")
+            "AND (:itemName = '' OR a.itemName = :itemName) " +
+            "ORDER BY a.adRequestDate DESC")
     List<AgencyMission> findMissionsByAgencyCode(@Param("agencyCode") String agencyCode,
                                                  @Param("reward") String reward,
                                                  @Param("placeName") String placeName,
