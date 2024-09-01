@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://43.200.126.113:5432/NOVA_TEST
-#    url: jdbc:postgresql://43.200.126.113:5432/NOVA_LIVE
+#    url: jdbc:postgresql://43.200.126.113:5432/NOVA_TEST
+    url: jdbc:postgresql://43.200.126.113:5432/NOVA_LIVE
 #    url: jdbc:postgresql://localhost:5432/NOVA_TEST
     username: postgres
     password: tjdgns123..
