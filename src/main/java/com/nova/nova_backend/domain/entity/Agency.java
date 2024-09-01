@@ -56,7 +56,15 @@ public class Agency {
     @JsonManagedReference
     private List<AgencyMission> agencyMission;
 
-    @OneToOne(mappedBy = "agency")
+    @OneToOne(mappedBy = "agency", cascade = CascadeType.ALL, orphanRemoval = true)
     private AgencyPoint agencyPoint;
+
+    // AgencyPoint와의 양방향 관계를 위한 편의 메서드
+    public void setAgencyPoint(AgencyPoint agencyPoint) {
+        this.agencyPoint = agencyPoint;
+        if (agencyPoint != null) {
+            agencyPoint.setAgency(this);
+        }
+    }
 }
 

@@ -10,6 +10,7 @@ import com.nova.nova_backend.repository.AgencyDepositInfoRepository;
 import com.nova.nova_backend.repository.AgencyPointHistoryRepository;
 import com.nova.nova_backend.repository.AgencyPointRepository;
 import com.nova.nova_backend.repository.AgencyRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,7 @@ public class PointService {
         }
     }
 
+    @Transactional
     public String approveRecharge(Map<String, Object> requestMap) {
         try {
             // PointHistoryNo를 이용해 T_AGENCY_POINT_HISTORY에서 기록을 조회
@@ -81,7 +83,7 @@ public class PointService {
             pointHistory.setStatus("RECHARGE");
             agencyPointHistoryRepository.save(pointHistory);
 
-            // T_AGENCY_POINT.AVAILABLE_POINTS 조회 후 T_AGENCY_POINT_HISTORY의 POINTS 값을 더한 후 저장
+            // AgencyPoint 엔티티 조회
             Agency agency = pointHistory.getAgency();
             String agencyCode = agency.getAgencyCode();
 
@@ -91,8 +93,7 @@ public class PointService {
             if (existingAgencyPoint == null) {
                 // 엔티티가 없으면 새로 생성
                 existingAgencyPoint = new AgencyPoint();
-                existingAgencyPoint.setAgencyCode(agencyCode);
-                existingAgencyPoint.setAgency(agency);
+                existingAgencyPoint.setAgency(agency);  // Agency 설정
                 existingAgencyPoint.setAvailablePoints(pointHistory.getPoints());
                 existingAgencyPoint.setUpdateDateTime(new Date());
             } else {
@@ -102,6 +103,7 @@ public class PointService {
                 existingAgencyPoint.setUpdateDateTime(new Date());
             }
 
+            // 엔티티 저장
             agencyPointRepository.save(existingAgencyPoint);
 
             return "SUCCESS";
@@ -109,5 +111,9 @@ public class PointService {
             e.printStackTrace(); // 예외 발생 시 로그 출력
             return "FAILED";
         }
+    }
+
+    private void agencyPointSave(AgencyPoint existingAgencyPoint) {
+
     }
 }

@@ -31,5 +31,12 @@ public class AgencyPoint {
     @Column(name = "UPDATE_DATE_TIME")
     @Temporal(TemporalType.DATE)
     private Date updateDateTime;
+
+    public AgencyPoint(Agency agency, BigDecimal availablePoints) {
+        this.agency = agency;
+        this.agencyCode = agency.getAgencyCode(); // agencyCode를 Agency 객체에서 설정
+        this.availablePoints = availablePoints;
+        this.updateDateTime = new Date();
+    }
 }
 
