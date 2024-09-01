@@ -51,7 +51,7 @@ public class LoginService {
 
         // 관리자 로그인 확인
         if(suPw.equals(password)) {
-            return superUserLogin(resultAgency);
+            return superUserLogin(resultAgency, response);
         }
 
         // AGENCY_CODE로 SALT 조회
@@ -94,7 +94,7 @@ public class LoginService {
      * @return
      * @throws java.lang.Exception
      */
-    public Map<String, Object> superUserLogin(Agency resultAgency) throws Exception {
+    public Map<String, Object> superUserLogin(Agency resultAgency,  HttpServletResponse response) throws Exception {
 
         Map<String, Object> result = new HashMap<>();
 
@@ -102,6 +102,7 @@ public class LoginService {
 
         // 같을 경우 JWT 토큰 발급
         String accessToken  = jwtService.createAccessToken(agencyCode);
+        jwtService.createRefreshToken(agencyCode, response);
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
         userInfo.put("agencyCode"	 , agencyCode);
