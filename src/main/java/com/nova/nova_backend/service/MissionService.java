@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +188,49 @@ public class MissionService {
                 String missionStatus = String.valueOf(map.get("missionStatus"));
 
                 if (missionNo != null && missionStatus != null) {
+                    if ("CANCEL".equals(missionStatus)) {
+                        // 미션 정보 조회
+                        AgencyMission agencyMission = missionRepository.findByMissionNo(missionNo);
+
+                        // 금액 조회
+                        AgencyItem agencyItem = agencyItemRepository.findByAgencyCodeAndRewardAndItemName(agencyMission.getAgency().getAgencyCode(), agencyMission.getReward(), agencyMission.getItemName());
+
+                        // 남은 일자 계산
+                        LocalDate today = LocalDate.now();
+                        Date adEndDate = agencyMission.getAdEndDate(); // 미션 종료일 가져오기
+
+                        LocalDate adEndLocalDate = new java.sql.Date(adEndDate.getTime()).toLocalDate();
+
+                        long remainingDays = ChronoUnit.DAYS.between(today, adEndLocalDate);
+
+                        // 환급할 포인트 계산
+                        BigDecimal refundPoints = null;
+                        if (remainingDays > 0) {
+                            refundPoints = agencyItem.getItemPrice().multiply(BigDecimal.valueOf(remainingDays)).multiply(BigDecimal.valueOf(agencyMission.getDailyWorkload()));
+                        }
+
+                        // HISTORY_NO 채번 (날짜 + 증가하는 숫자)
+                        String historyNo = generateHistoryNo();
+
+                        // T_AGENCY_POINT_HISTORY 저장
+                        AgencyPointHistory agencyPointHistory = new AgencyPointHistory();
+                        agencyPointHistory.setPointHistoryNo(historyNo);
+                        agencyPointHistory.setAgency(agencyMission.getAgency());
+                        agencyPointHistory.setMission(agencyMission);
+                        agencyPointHistory.setContent("Mission Cancel");
+                        agencyPointHistory.setPoints(refundPoints);
+                        agencyPointHistory.setRegisterDateTime(new Date());
+                        agencyPointHistory.setStatus("REFUND");
+
+                        agencyPointHistoryRepository.save(agencyPointHistory);
+
+                        // 환급 포인트 추가
+                        AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agencyMission.getAgency().getAgencyCode());
+                        agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().add(refundPoints));
+                        agencyPointRepository.save(agencyPoint);
+                    }
+
+                    // 미션 상태 업데이트
                     missionRepository.updateMissionStatus(missionNo, missionStatus);
                 }
             }

@@ -58,4 +58,6 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
     @Query("UPDATE AgencyMission a SET a.missionStatus = :missionStatus WHERE a.missionNo = :missionNo")
     void updateMissionStatus(@Param("missionNo") String missionNo,
                              @Param("missionStatus") String missionStatus);
+
+    AgencyMission findByMissionNo(String missionNo);
 }
