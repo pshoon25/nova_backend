@@ -25,7 +25,8 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
             + "WHERE (:agencyName IS NULL OR age.agencyName LIKE %:agencyName%) "
             + "AND (:resaleYn IS NULL OR age.resaleYn = :resaleYn) "
             + "AND (:useYn IS NULL OR age.useYn = :useYn) "
-            + "GROUP BY age.agencyCode, age.loginId, age.password, age.agencyName, age.name, age.phoneNum, age.resaleYn, age.userType, age.useYn, age.registerDateTime")
+            + "GROUP BY age.agencyCode, age.loginId, age.password, age.agencyName, age.name, age.phoneNum, age.resaleYn, age.userType, age.useYn, age.registerDateTime "
+            + "ORDER BY age.registerDateTime DESC")
     List<AgencyItemSummaryDTO> findAgencyItems(@Param("agencyName") String agencyName,
                                                @Param("resaleYn") String resaleYn,
                                                @Param("useYn") String useYn);

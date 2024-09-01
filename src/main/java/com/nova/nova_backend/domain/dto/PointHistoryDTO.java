@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -18,11 +19,11 @@ public class PointHistoryDTO {
     private String missionNo;
     private String content;
     private BigDecimal points;
-    private Date registerDateTime;
+    private LocalDateTime registerDateTime;
     private String status;
     private String depositor;
 
-    public PointHistoryDTO(String pointHistoryNo, String reward, String agencyName, String missionNo, String content, BigDecimal points, Date registerDateTime, String status, String depositor) {
+    public PointHistoryDTO(String pointHistoryNo, String reward, String agencyName, String missionNo, String content, BigDecimal points, LocalDateTime registerDateTime, String status, String depositor) {
         this.pointHistoryNo = pointHistoryNo;
         this.reward = reward;
         this.agencyName = agencyName;

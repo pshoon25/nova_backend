@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class PointService {
             String pointsStr = (String) requestMap.get("points");
             BigDecimal points = new BigDecimal(pointsStr);
             agencyPointHistory.setPoints(points);
-            agencyPointHistory.setRegisterDateTime(new Date());
+            agencyPointHistory.setRegisterDateTime(LocalDateTime.now());
             agencyPointHistory.setStatus("REQUEST");
 
             agencyPointHistoryRepository.save(agencyPointHistory);

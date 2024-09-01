@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -128,9 +129,9 @@ public class MissionService {
         agencyPointHistory.setPointHistoryNo(historyNo);
         agencyPointHistory.setAgency(agency);
         agencyPointHistory.setMission(agencyMission);
-        agencyPointHistory.setContent("Mission Add");
+        agencyPointHistory.setContent("(" + agencyMission.getAdRequestDate() + ") " + agencyMission.getPlaceName());
         agencyPointHistory.setPoints(deductionPoints);
-        agencyPointHistory.setRegisterDateTime(new Date());
+        agencyPointHistory.setRegisterDateTime(LocalDateTime.now());
         agencyPointHistory.setStatus("DEDUCTION");
 
         agencyPointHistoryRepository.save(agencyPointHistory);
@@ -217,9 +218,9 @@ public class MissionService {
                         agencyPointHistory.setPointHistoryNo(historyNo);
                         agencyPointHistory.setAgency(agencyMission.getAgency());
                         agencyPointHistory.setMission(agencyMission);
-                        agencyPointHistory.setContent("Mission Cancel");
+                        agencyPointHistory.setContent("(" + agencyMission.getAdRequestDate() + ") " + agencyMission.getPlaceName());
                         agencyPointHistory.setPoints(refundPoints);
-                        agencyPointHistory.setRegisterDateTime(new Date());
+                        agencyPointHistory.setRegisterDateTime(LocalDateTime.now());
                         agencyPointHistory.setStatus("REFUND");
 
                         agencyPointHistoryRepository.save(agencyPointHistory);

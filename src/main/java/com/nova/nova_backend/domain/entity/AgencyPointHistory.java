@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -36,8 +37,7 @@ public class AgencyPointHistory {
     private BigDecimal points;
 
     @Column(name = "REGISTER_DATE_TIME")
-    @Temporal(TemporalType.DATE)
-    private Date registerDateTime;
+    private LocalDateTime registerDateTime;  // 변경된 부분
 
     @Column(name = "STATUS")
     private String status;
