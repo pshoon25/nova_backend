@@ -17,8 +17,19 @@ public interface AgencyPointHistoryRepository extends JpaRepository<AgencyPointH
             "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) AND " +
             "(:status IS NULL OR p.status = :status) " +
             "ORDER BY p.registerDateTime DESC")
-    List<PointHistoryDTO> findPointHistoryDetails(@Param("agencyName") String agencyName,
-                                                  @Param("status") String status);
+    List<PointHistoryDTO> getPointHistoryListByAgencyName(@Param("agencyName") String agencyName,
+                                                          @Param("status") String status);
+
+    @Query("SELECT new com.nova.nova_backend.domain.dto.PointHistoryDTO(p.pointHistoryNo, m.reward, a.agencyName, m.missionNo, p.content, p.points, p.registerDateTime, p.status, d.depositor) " +
+            "FROM AgencyPointHistory p " +
+            "LEFT JOIN p.agency a " +
+            "LEFT JOIN p.mission m " +
+            "LEFT JOIN AgencyDepositInfo d ON (d.pointHistoryNo = p.pointHistoryNo) " +
+            "WHERE (:agencyCode IS NULL OR a.agencyCode LIKE %:agencyCode%) AND " +
+            "(:status IS NULL OR p.status = :status) " +
+            "ORDER BY p.registerDateTime DESC")
+    List<PointHistoryDTO> getPointHistoryListByAgencyCode(@Param("agencyCode") String agencyCode,
+                                                          @Param("status") String status);
 
     @Query("SELECT MAX(a.pointHistoryNo) FROM AgencyPointHistory a WHERE a.pointHistoryNo LIKE :prefix%")
     String findMaxPointHistoryNoStartingWith(@Param("prefix") String prefix);

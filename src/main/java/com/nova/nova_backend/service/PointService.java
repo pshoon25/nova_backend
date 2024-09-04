@@ -30,8 +30,12 @@ public class PointService {
     private final MissionService missionService;
     private final AgencyDepositInfoRepository agencyDepositInfoRepository;
 
-    public List<PointHistoryDTO> getPointHistoryList(String agencyName, String status) {
-        return agencyPointHistoryRepository.findPointHistoryDetails(agencyName, status);
+    public List<PointHistoryDTO> getPointHistoryListByAgencyName(String agencyName, String status) {
+        return agencyPointHistoryRepository.getPointHistoryListByAgencyName(agencyName, status);
+    }
+
+    public List<PointHistoryDTO> getPointHistoryListByAgencyCode(String agencyCode, String status) {
+        return agencyPointHistoryRepository.getPointHistoryListByAgencyCode(agencyCode, status);
     }
 
     public AgencyPointDTO getAgencyPointByAgencyName(String agencyName) {

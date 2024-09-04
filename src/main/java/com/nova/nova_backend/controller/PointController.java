@@ -35,7 +35,7 @@ public class PointController {
                                                        @RequestParam(value = "status", required = false) String status) throws IOException {
 
         // 포인트 사용 내역 리스트를 가져오는 서비스 호출
-        List<PointHistoryDTO> pointHistoryList = pointService.getPointHistoryList(agencyName, status);
+        List<PointHistoryDTO> pointHistoryList = pointService.getPointHistoryListByAgencyName(agencyName, status);
 
         // 엑셀 파일 생성
         try (Workbook workbook = new XSSFWorkbook()) {
@@ -87,10 +87,16 @@ public class PointController {
         }
     }
 
-    @GetMapping("/getPointHistoryList")
-    public List<PointHistoryDTO> getPointHistoryList(@RequestParam(value = "agencyName", required = false) String agencyName,
-                                                     @RequestParam(value = "status", required = false) String status) {
-        return pointService.getPointHistoryList(agencyName, status);
+    @GetMapping("/getPointHistoryListByAgencyName")
+    public List<PointHistoryDTO> getPointHistoryListByAgencyName(@RequestParam(value = "agencyName", required = false) String agencyName,
+                                                                 @RequestParam(value = "status", required = false) String status) {
+        return pointService.getPointHistoryListByAgencyName(agencyName, status);
+    }
+
+    @GetMapping("/getPointHistoryListByAgencyCode")
+    public List<PointHistoryDTO> getPointHistoryListByAgencyCode(@RequestParam(value = "agencyCode", required = false) String agencyCode,
+                                                                 @RequestParam(value = "status", required = false) String status) {
+        return pointService.getPointHistoryListByAgencyCode(agencyCode, status);
     }
 
     @GetMapping("/getAgencyPointByAgencyName")
