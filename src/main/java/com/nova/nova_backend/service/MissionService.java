@@ -84,7 +84,7 @@ public class MissionService {
 
 
         // 잔액이 없을 경우
-        if (agencyPoint == null || agencyPoint.getAvailablePoints().compareTo(deductionPoints) <= 0) {
+        if (agencyPoint == null || agencyPoint.getAvailablePoints().compareTo(deductionPoints) < 0) {
             return "NO POINTS";
         }
 
