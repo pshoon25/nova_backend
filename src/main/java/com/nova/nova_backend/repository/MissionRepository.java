@@ -61,5 +61,28 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
     void updateMissionStatus(@Param("missionNo") String missionNo,
                              @Param("missionStatus") String missionStatus);
 
+    @Modifying
+    @Query("UPDATE AgencyMission a " +
+            "SET a.missionStatus = :missionStatus, " +
+            "a.mid = :mid, " +
+            "a.priceComparisonId = :priceComparisonId, " +
+            "a.placeName = :placeName, " +
+            "a.rankKeyword = :rankKeyword, " +
+            "a.mainSearchKeyword = :mainSearchKeyword, " +
+            "a.subSearchKeyword = :subSearchKeyword, " +
+            "a.correctAnswer = :correctAnswer, " +
+            "a.placeUrl = :placeUrl " +
+            "WHERE a.missionNo = :missionNo")
+    void updateMissionInfo(@Param("missionNo") String missionNo,
+                           @Param("missionStatus") String missionStatus,
+                           @Param("mid") String mid,
+                           @Param("priceComparisonId") String priceComparisonId,
+                           @Param("placeName") String placeName,
+                           @Param("rankKeyword") String rankKeyword,
+                           @Param("mainSearchKeyword") String mainSearchKeyword,
+                           @Param("subSearchKeyword") String subSearchKeyword,
+                           @Param("correctAnswer") String correctAnswer,
+                           @Param("placeUrl") String placeUrl);
+
     AgencyMission findByMissionNo(String missionNo);
 }

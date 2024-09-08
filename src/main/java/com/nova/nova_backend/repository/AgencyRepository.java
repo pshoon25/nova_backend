@@ -33,4 +33,6 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
 
     Agency findByAgencyCode(String agencyCode);
     Agency findByLoginId(String loginId);
+
+    Agency findByAgencyName(String agencyName);
 }

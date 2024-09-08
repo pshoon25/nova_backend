@@ -118,7 +118,39 @@ public class PointService {
         }
     }
 
-    private void agencyPointSave(AgencyPoint existingAgencyPoint) {
+    @Transactional
+    public String pointDeduction(Map<String, Object> requestMap) {
+        try {
+            String pointsStr = String.valueOf(requestMap.get("points"));
+            BigDecimal points = new BigDecimal(pointsStr);
+            String agencyName = String.valueOf(requestMap.get("agencyName"));
+            Agency agency = agencyRepository.findByAgencyName(agencyName);
 
+            // 차감 가능 여부 확인
+            AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agency.getAgencyCode());
+            if (agencyPoint.getAvailablePoints().subtract(points).compareTo(BigDecimal.ZERO) < 0) {
+                return "Insufficient available points for deduction";
+            }
+
+            // 포인트 차감 내역 추가
+            AgencyPointHistory agencyPointHistory = new AgencyPointHistory();
+            agencyPointHistory.setPointHistoryNo(missionService.generateHistoryNo());
+            agencyPointHistory.setAgency(agency);
+            agencyPointHistory.setContent(String.valueOf(requestMap.get("reason")));
+            agencyPointHistory.setPoints(points);
+            agencyPointHistory.setRegisterDateTime(LocalDateTime.now());
+            agencyPointHistory.setStatus("DEDUCTION");
+
+            agencyPointHistoryRepository.save(agencyPointHistory);
+
+            // T_AGENCY_POINT.AVAILABLE_POINTS 차감
+            agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().subtract(points));
+            agencyPointRepository.save(agencyPoint);
+
+            return "SUCCESS";
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception for debugging
+            return "FAILED";
+        }
     }
 }

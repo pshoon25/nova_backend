@@ -166,8 +166,8 @@ public class MissionController {
         return missionService.insertAgencyMission(requestMap);
     }
 
-    @PostMapping("/saveNovaMissionStatus")
-    public String saveNovaMissionStatus(@RequestBody List<Map<String, Object>> requestMapList) throws Exception {
-        return missionService.saveNovaMissionStatus(requestMapList);
+    @PostMapping("/saveMissionInfo")
+    public String saveMissionInfo(@RequestBody List<Map<String, Object>> requestMapList) throws Exception {
+        return missionService.saveMissionInfo(requestMapList);
     }
 }

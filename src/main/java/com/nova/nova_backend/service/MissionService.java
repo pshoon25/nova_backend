@@ -182,10 +182,10 @@ public class MissionService {
     }
 
     @Transactional
-    public String saveNovaMissionStatus(List<Map<String, Object>> requestMapList) {
+    public String saveMissionInfo(List<Map<String, Object>> requestMapList) {
         try {
             for (Map<String, Object> map : requestMapList) {
-                String missionNo = String.valueOf(map.get("missionNo"));
+                String missionNo     = String.valueOf(map.get("missionNo"));
                 String missionStatus = String.valueOf(map.get("missionStatus"));
 
                 if (missionNo != null && missionStatus != null) {
@@ -229,10 +229,23 @@ public class MissionService {
                         AgencyPoint agencyPoint = agencyPointRepository.findByAgencyCode(agencyMission.getAgency().getAgencyCode());
                         agencyPoint.setAvailablePoints(agencyPoint.getAvailablePoints().add(refundPoints));
                         agencyPointRepository.save(agencyPoint);
-                    }
 
-                    // 미션 상태 업데이트
-                    missionRepository.updateMissionStatus(missionNo, missionStatus);
+                        // 미션 상태 업데이트
+                        missionRepository.updateMissionStatus(missionNo, missionStatus);
+                    } else {
+                        String mid               = map.get("mid")               != null ? String.valueOf(map.get("mid")) : "";
+                        String priceComparisonId = map.get("priceComparisonId") != null ? String.valueOf(map.get("priceComparisonId")) : "";
+                        String placeName         = map.get("placeName")         != null ? String.valueOf(map.get("placeName")) : "";
+                        String rankKeyword       = map.get("rankKeyword")       != null ? String.valueOf(map.get("rankKeyword")) : "";
+                        String mainSearchKeyword = map.get("mainSearchKeyword") != null ? String.valueOf(map.get("mainSearchKeyword")) : "";
+                        String subSearchKeyword  = map.get("subSearchKeyword")  != null ? String.valueOf(map.get("subSearchKeyword")) : "";
+                        String correctAnswer     = map.get("correctAnswer")     != null ? String.valueOf(map.get("correctAnswer")) : "";
+                        String placeUrl          = map.get("placeUrl")          != null ? String.valueOf(map.get("placeUrl")) : "";
+
+
+                        // 미션 상태 업데이트
+                        missionRepository.updateMissionInfo(missionNo, missionStatus, mid, priceComparisonId, placeName, rankKeyword, mainSearchKeyword, subSearchKeyword, correctAnswer, placeUrl);
+                    }
                 }
             }
             return "SUCCESS";

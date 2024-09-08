@@ -118,4 +118,9 @@ public class PointController {
     public String approveRecharge(@RequestBody Map<String, Object> requestMap) {
         return pointService.approveRecharge(requestMap);
     }
+
+    @PostMapping("/pointDeduction")
+    public String pointDeduction(@RequestBody Map<String, Object> requestMap) {
+        return pointService.pointDeduction(requestMap);
+    }
 }
