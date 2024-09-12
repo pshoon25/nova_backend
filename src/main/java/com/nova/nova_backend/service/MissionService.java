@@ -196,18 +196,34 @@ public class MissionService {
                         // 금액 조회
                         AgencyItem agencyItem = agencyItemRepository.findByAgencyCodeAndRewardAndItemName(agencyMission.getAgency().getAgencyCode(), agencyMission.getReward(), agencyMission.getItemName());
 
-                        // 남은 일자 계산
-                        LocalDate today = LocalDate.now();
-                        Date adEndDate = agencyMission.getAdEndDate(); // 미션 종료일 가져오기
+                        // if 광고 시작일이 오늘 날짜보다 더 클 경우, 전액 환불
+                        LocalDate today  = LocalDate.now();
+                        Date adStartDate = agencyMission.getAdStartDate();
+                        Date adEndDate   = agencyMission.getAdEndDate();
 
-                        LocalDate adEndLocalDate = new java.sql.Date(adEndDate.getTime()).toLocalDate();
+                        LocalDate adStartLocalDate = new java.sql.Date(adStartDate.getTime()).toLocalDate();
+                        LocalDate adEndLocalDate   = new java.sql.Date(adEndDate.getTime()).toLocalDate();
 
                         long remainingDays = ChronoUnit.DAYS.between(today, adEndLocalDate);
 
                         // 환급할 포인트 계산
                         BigDecimal refundPoints = null;
-                        if (remainingDays > 0) {
-                            refundPoints = agencyItem.getItemPrice().multiply(BigDecimal.valueOf(remainingDays)).multiply(BigDecimal.valueOf(agencyMission.getDailyWorkload()));
+
+                        // 광고가 이미 종료된 경우 환불 없음
+                        if (ChronoUnit.DAYS.between(today, adEndLocalDate) <= 0) {
+                            refundPoints = BigDecimal.ZERO;
+                        }
+                        // 광고 시작 전인 경우 전액 환불
+                        else if (today.isBefore(adStartLocalDate)) {
+                            refundPoints = agencyItem.getItemPrice()
+                                    .multiply(BigDecimal.valueOf(agencyMission.getTotalWorkdays()))
+                                    .multiply(BigDecimal.valueOf(agencyMission.getDailyWorkload()));
+                        }
+                        // 광고가 진행 중인 경우 남은 일수에 대한 부분 환불
+                        else {
+                            refundPoints = agencyItem.getItemPrice()
+                                    .multiply(BigDecimal.valueOf(remainingDays))
+                                    .multiply(BigDecimal.valueOf(agencyMission.getDailyWorkload()));
                         }
 
                         // HISTORY_NO 채번 (날짜 + 증가하는 숫자)
