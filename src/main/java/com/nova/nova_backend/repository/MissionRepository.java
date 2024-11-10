@@ -37,7 +37,7 @@ public interface MissionRepository extends JpaRepository<AgencyMission, Long> {
             "WHERE (:agencyName IS NULL OR a.agencyName LIKE %:agencyName%) " +
             "AND m.reward = :reward " +
             "AND (:itemName = '' OR m.itemName = :itemName) " +
-            "ORDER BY m.adRequestDate DESC")
+            "ORDER BY m.missionNo, m.adRequestDate DESC")
     List<AdminMissionDTO> findMissionsByAgencyName(@Param("agencyName") String agencyName,
                                                  @Param("reward") String reward,
                                                  @Param("itemName") String itemName);
