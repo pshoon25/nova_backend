@@ -37,7 +37,8 @@ public class WebConfig {
                 System.out.println("Request Method: " + httpRequest.getMethod());
 
                 // rs-nova.co.kr이 포함된 Origin을 모두 허용
-                if (originHeader != null && originHeader.contains("rs-nova.co.kr")) {
+                // if (originHeader != null && originHeader.contains("rs-nova.co.kr")) {
+                if (originHeader != null && originHeader.contains("p95.co.kr")) {
                     httpResponse.setHeader("Access-Control-Allow-Origin", originHeader);
                     httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
                     httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
@@ -55,7 +56,8 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
+                        // .allowedOrigins("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr")
+                        .allowedOrigins("http://localhost:3000", "http://www.p95.co.kr", "https://www.p95.co.kr")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true)
@@ -67,7 +69,8 @@ public class WebConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr"));
+        // corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.rs-nova.co.kr", "https://www.rs-nova.co.kr"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://www.p95.co.kr", "https://www.p95.co.kr"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setMaxAge(3600L);
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH"));
